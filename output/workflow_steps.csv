@@ -1,7 +1,7 @@
-Step,Workflow,Description
-1,LinkedIn Search,"HR Manager Turkey, İnsan Kaynakları Müdürü, Talent Acquisition Turkey, People & Culture Manager Türkiye, Learning & Development Manager Turkey aramalarıyla lead havuzu oluştur."
-2,Google Sheets,"Ad Soyad, Şirket, Ünvan, LinkedIn URL, Email ve source bilgilerini tek tabloda topla. Email yoksa boş bırak."
-3,Cleaning,"Duplicate kayıtları, ünvan varyasyonlarını, şirket adlarını ve boş alanları normalize et."
-4,AI Enrichment,"Şirket, ünvan ve sektör üzerinden pain point, İngilizce ihtiyacı tahmini ve outreach angle üret."
-5,Outreach Generation,Her lead için şirket + ünvan + ihtiyaç bağlamıyla kısa LinkedIn DM ve cold email üret.
-6,CRM Status,"Lead score'a göre Priority outreach, Warm nurture, Test sequence veya Low-touch nurture stage'ine ata."
+﻿Step,Workflow,Description
+1,LinkedIn Search,"HR Manager Turkey, Insan Kaynaklari Muduru, Talent Acquisition Turkey, People & Culture Manager Turkiye, Learning & Development Manager Turkey aramalariyla lead havuzu olustur."
+2,Google Sheets,"Ad Soyad, Sirket, Unvan, LinkedIn URL ve Email alanlarini tek tabloda topla. Email yoksa bos birak."
+3,Cleaning,"Duplicate kayitlari, unvan varyasyonlarini, sirket adlarini ve bos alanlari normalize et."
+4,AI Enrichment,"Sirket, unvan ve sektor uzerinden pain point, Ingilizce ihtiyaci tahmini ve outreach angle uret."
+5,Outreach Generation,Her lead icin sirket + unvan + ihtiyac baglamiyla kisa LinkedIn DM ve cold email uret.
+6,CRM Status,"Lead score'a gore Priority outreach, Warm nurture, Test sequence veya Low-touch nurture stage'ine ata."

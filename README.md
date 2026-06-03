@@ -8,7 +8,8 @@ Amaç: 100 lead'lik örnek HR listesi oluşturmak, lead'leri zenginleştirmek, k
 
 - Lokal GUI: `python src/gui_app.py`
 - Lokal adres: `http://127.0.0.1:8765`
-- GitHub Pages: Repo Settings > Pages veya Actions tamamlandıktan sonra yayınlanır.
+- Streamlit Cloud app: `streamlit_app.py`
+- GitHub Pages statik demo: `https://sercanozkan55.github.io/AI-Ops-Intern-Challenge/`
 
 ## Teslim Özeti
 
@@ -85,6 +86,24 @@ GUI içinde:
 - CSV ve XLSX çıktıları indirilebilir.
 - Workflow adımları görünür.
 
+Streamlit ile public demo için:
+
+```bash
+streamlit run streamlit_app.py
+```
+
+Streamlit Cloud'da yayınlamak için:
+
+```text
+New app → GitHub repo seç
+Repository: SercanOzkan55/AI-Ops-Intern-Challenge
+Branch: master
+Main file path: streamlit_app.py
+Deploy
+```
+
+Streamlit Cloud `requirements.txt` dosyasını okuyup `streamlit` paketini otomatik kurar.
+
 ## Kendi CSV'ini İşleme
 
 Gerçek veriyle çalışmak için:
@@ -156,6 +175,7 @@ Lead score'a göre stage atanır:
 - Multi-step outreach kurgusu
 
 Aktif çalışan kısım: lead generation, enrichment, outreach generation, lead scoring, CRM stage ve lokal GUI.
+Public canlı demo için `streamlit_app.py` kullanılabilir.
 
 ## GitHub Pages
 

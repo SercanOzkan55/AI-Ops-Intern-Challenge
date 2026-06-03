@@ -5,44 +5,32 @@
     {
       "id": "lead_source",
       "type": "manual_or_export",
-      "description": "LinkedIn Sales Navigator, Apollo, Clay, Google Sheets, or manually verified CSV export.",
-      "output": "data/raw_hr_leads_sample.csv"
+      "description": "LinkedIn Sales Navigator, Apollo, Clay, Google Sheets, or manually verified CSV export."
     },
     {
       "id": "cleaning",
       "type": "python",
-      "description": "Normalize names, companies, titles, duplicate keys, empty email/linkedin fields.",
-      "input": "raw leads CSV"
+      "description": "Normalize names, companies, titles, duplicate keys, and empty fields."
     },
     {
       "id": "enrichment",
       "type": "python + AI prompt layer",
-      "description": "Infer sector, company size, persona, English need, pain point, and outreach angle.",
-      "input": "clean leads"
+      "description": "Infer sector, company size, persona, English need, pain point, and outreach angle."
     },
     {
       "id": "lead_scoring",
       "type": "rules",
-      "description": "Score by sector intensity, company size, seniority, and role relevance.",
-      "input": "enriched leads"
+      "description": "Score by sector intensity, company size, seniority, and role relevance."
     },
     {
       "id": "outreach_generation",
       "type": "AI copy generation",
-      "description": "Generate short LinkedIn DM and cold email using lead-level context.",
-      "input": "scored enriched leads"
+      "description": "Generate short LinkedIn DM and cold email using lead-level context."
     },
     {
       "id": "crm_pipeline",
       "type": "csv_or_airtable",
-      "description": "Route leads into Priority outreach, Warm nurture, Test sequence, or Low-touch nurture.",
-      "output": "output/crm_pipeline.csv"
-    },
-    {
-      "id": "reply_classification_bonus",
-      "type": "AI classifier",
-      "description": "Classify replies as interested, objection, timing, wrong person, unsubscribe, or bounced.",
-      "status": "bonus blueprint"
+      "description": "Route leads into Priority outreach, Warm nurture, Test sequence, or Low-touch nurture."
     }
   ],
   "edges": [
@@ -65,10 +53,6 @@
     [
       "outreach_generation",
       "crm_pipeline"
-    ],
-    [
-      "crm_pipeline",
-      "reply_classification_bonus"
     ]
   ]
 }

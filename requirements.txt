@@ -1,2 +1,1 @@
-# No third-party packages required.
-# The prototype runs with Python 3.10+ standard library only.
+streamlit>=1.36
