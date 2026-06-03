@@ -46,6 +46,34 @@ WORKFLOW_STEPS = [
     "CRM Status",
 ]
 
+DEMO_EMAIL_DOMAINS = {
+    "Trendyol": "trendyol.example",
+    "Getir": "getir.example",
+    "Hepsiburada": "hepsiburada.example",
+    "Yemeksepeti": "yemeksepeti.example",
+    "Peak Games": "peakgames.example",
+    "Dream Games": "dreamgames.example",
+    "Turkcell": "turkcell.example",
+    "Vodafone Turkey": "vodafone.example",
+    "Garanti BBVA": "garantibbva.example",
+    "Akbank": "akbank.example",
+    "Yapi Kredi": "yapikredi.example",
+    "Isbank": "isbank.example",
+    "Ford Otosan": "fordotosan.example",
+    "Tofas": "tofas.example",
+    "Arcelik": "arcelik.example",
+    "Vestel": "vestel.example",
+    "LC Waikiki": "lcwaikiki.example",
+    "Mavi": "mavi.example",
+    "Eczacibasi": "eczacibasi.example",
+    "Koc Holding": "kocholding.example",
+    "Sabanci Holding": "sabanci.example",
+    "Logo Yazilim": "logoyazilim.example",
+    "Insider": "insider.example",
+    "Papara": "papara.example",
+    "Colendi": "colendi.example",
+}
+
 
 st.set_page_config(
     page_title="Turkiye HR Lead Generator",
@@ -70,6 +98,34 @@ def clean_cell(value: object) -> str:
 
 def display_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     return [{column: clean_cell(row.get(column)) for column in COLUMNS} for row in rows]
+
+
+def email_name_slug(full_name: str) -> str:
+    replacements = {
+        "ı": "i",
+        "ğ": "g",
+        "ü": "u",
+        "ş": "s",
+        "ö": "o",
+        "ç": "c",
+    }
+    normalized = full_name.lower()
+    for source, target in replacements.items():
+        normalized = normalized.replace(source, target)
+    return ".".join(part for part in normalized.split() if part)
+
+
+def enrich_demo_emails(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    enriched: list[dict[str, str]] = []
+    for row in rows:
+        next_row = dict(row)
+        if not next_row.get("Email"):
+            domain = DEMO_EMAIL_DOMAINS.get(next_row.get(COL_COMPANY, ""))
+            name = email_name_slug(next_row.get("Ad Soyad", ""))
+            if domain and name:
+                next_row["Email"] = f"{name}@{domain}"
+        enriched.append(next_row)
+    return enriched
 
 
 def rows_to_csv_bytes(rows: list[dict[str, str]]) -> bytes:
@@ -190,6 +246,11 @@ with st.sidebar:
     min_score_filter = st.slider("Minimum lead score", min_value=0, max_value=100, value=0, step=5)
 
     st.divider()
+    demo_email_enabled = st.checkbox(
+        "Demo email enrichment göster",
+        value=False,
+        help="Gerçek email bulmaz. Sadece .example domainli, gönderilemez demo adres formatı üretir.",
+    )
     generate_clicked = st.button("Yeni 100 Lead Üret", type="primary", use_container_width=True)
     st.caption("Demo veri üretir. Gerçek kullanımda Apollo, Clay veya Sales Navigator CSV export bağlanabilir.")
 
@@ -200,9 +261,14 @@ if generate_clicked:
         st.session_state.rows = generate_new_leads(int(lead_count), progress_slot, log_slot)
     st.success(f"Türkiye odaklı {len(st.session_state.rows)} HR lead üretildi ve tablolar güncellendi.")
 
-rows = st.session_state.rows
+rows = enrich_demo_emails(st.session_state.rows) if demo_email_enabled else st.session_state.rows
 filtered_rows = filter_rows(rows, sector_filter, size_filter, min_score_filter)
 summary = score_summary(rows)
+
+if demo_email_enabled:
+    st.warning(
+        "Demo email enrichment açık: Email alanları .example domainiyle gösterilir ve gerçek gönderim adresi değildir."
+    )
 
 metric_cols = st.columns(5)
 metric_cols[0].metric("Toplam lead", summary["total"])

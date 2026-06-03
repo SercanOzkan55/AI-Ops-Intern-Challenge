@@ -42,6 +42,8 @@ LinkedIn Search
 
 Bu prototip doğrudan LinkedIn scraping yapmaz ve kişisel email uydurmaz. Challenge metnindeki "varsa email" beklentisine uygun şekilde email bulunmuyorsa boş bırakılır. Gerçek kullanımda LinkedIn Sales Navigator, Apollo, Clay veya manuel doğrulanmış CSV export sisteme input olarak verilebilir.
 
+Streamlit arayüzündeki demo email enrichment gerçek email finder değildir; yalnızca jüriye email enrichment mantığını göstermek için `.example` domainli, gönderilemez örnek adres üretir. Gerçek outreach için doğrulanmış business email CSV/API kaynağı gerekir.
+
 ## Google Sheets Kolonları
 
 Ana çıktı şu kolonlarla üretilir:
@@ -110,6 +112,7 @@ Streamlit arayüzünde jüri/demo kullanımı için şu kontroller vardır:
 - Yeni lead üretiminde spinner, progress bar ve işlem log'u görünür.
 - Sektör, şirket büyüklüğü ve minimum lead score filtreleri vardır.
 - Boş LinkedIn URL / Email hücreleri arayüzde `-` olarak gösterilir.
+- Opsiyonel `Demo email enrichment göster` kontrolü, gerçek email bulmadan `.example` domainli gönderilemez örnek email formatı üretir.
 - Üst metriklerde toplam lead, bulunan e-posta, ortalama İngilizce ihtiyacı, ortalama lead score ve priority outreach görünür.
 - Seçilen lead için LinkedIn DM ve cold email önizleme alanı vardır.
 - Kod içinde hardcoded API key yoktur; production entegrasyonunda secret yönetimi `st.secrets` veya environment variable ile yapılmalıdır.
