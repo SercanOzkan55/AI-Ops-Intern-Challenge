@@ -164,17 +164,16 @@
       <div class="step">CRM Status</div>
     </section>
 
-    <p class="note">Bu sayfa statik GitHub Pages demosudur. Yeni lead üretimi için lokal GUI: <code>python src/gui_app.py</code></p>
+    <p class="note">Bu sayfa statik GitHub Pages özetidir. Gerçek CSV yükleme ve canlı tablo için Streamlit uygulaması kullanılmalıdır.</p>
 
     <section class="panel">
       <div class="panel-head">
         <div>
           <h2>HR Leads</h2>
-          <p class="sub" id="status">CSV yükleniyor...</p>
+          <p class="sub" id="status">Gerçek/verifiye CSV bekleniyor.</p>
         </div>
         <div class="actions">
-          <a class="button" href="assets/google_sheets_hr_leads.csv">CSV indir</a>
-          <a class="button" href="assets/konusarak-ogren-hr-outbound-google-sheets.xlsx">XLSX indir</a>
+          <a class="button" href="https://ai-ops-intern-challenge-24zhb9hk496ij7aue2ghjx.streamlit.app">Canlı Streamlit app</a>
         </div>
       </div>
       <div class="table-wrap">
@@ -251,12 +250,8 @@
       document.getElementById("status").textContent = `${total} lead yüklendi.`;
     }
 
-    fetch("assets/google_sheets_hr_leads.csv")
-      .then(response => response.text())
-      .then(text => render(parseCsv(text)))
-      .catch(() => {
-        document.getElementById("status").textContent = "CSV yüklenemedi.";
-      });
+    render([]);
+    document.getElementById("status").textContent = "GitHub Pages statik özet modunda. Gerçek lead tablosu Streamlit'e CSV yüklenince oluşur.";
   </script>
 </body>
 </html>

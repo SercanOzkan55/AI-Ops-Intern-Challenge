@@ -200,7 +200,7 @@ HTML = """<!doctype html>
 <body>
   <header>
     <h1>Türkiye HR Lead Generator</h1>
-    <p class="sub">Türkiye odaklı 100 HR lead üretir, enrichment/outreach tablolarını günceller ve mevcut çıktılara erişim verir.</p>
+    <p class="sub">Gerçek/verifiye HR lead çıktılarının enrichment, outreach ve CRM tablolarına erişim verir. Demo üretim yalnızca lokal test içindir.</p>
   </header>
   <main>
     <section class="toolbar">
@@ -210,7 +210,7 @@ HTML = """<!doctype html>
       <label>Lead sayısı
         <input id="count" type="number" min="1" max="500" value="100">
       </label>
-      <button id="generate">Yeni 100 Lead Üret</button>
+      <button id="generate">Demo Seed Üret</button>
       <button class="secondary" id="refresh">Mevcut Çıktıyı Aç</button>
     </section>
 
@@ -287,7 +287,7 @@ HTML = """<!doctype html>
     async function generate() {
       const count = Number(document.getElementById("count").value || 100);
       const query = document.getElementById("query").value;
-      setStatus("Yeni Türkiye HR lead seti üretiliyor...");
+      setStatus("Lokal test için demo seed data üretiliyor...");
       const res = await fetch("/api/generate", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
@@ -309,7 +309,7 @@ HTML = """<!doctype html>
 
 def read_rows() -> list[dict[str, str]]:
     if not LEADS_CSV.exists():
-        run(None, 100)
+        return []
     with LEADS_CSV.open(newline="", encoding="utf-8-sig") as handle:
         return list(csv.DictReader(handle))
 
@@ -360,7 +360,8 @@ class GuiHandler(BaseHTTPRequestHandler):
 
         if self.path == "/api/leads":
             rows = read_rows()
-            self._send_json({"rows": rows, "meta": build_meta(rows), "message": "Mevcut çıktı yüklendi."})
+            message = "Mevcut çıktı yüklendi." if rows else "Henüz verified CSV ile üretilmiş çıktı yok."
+            self._send_json({"rows": rows, "meta": build_meta(rows), "message": message})
             return
 
         if self.path.startswith("/download/"):
@@ -387,14 +388,14 @@ class GuiHandler(BaseHTTPRequestHandler):
         length = int(self.headers.get("Content-Length", "0"))
         payload = json.loads(self.rfile.read(length) or b"{}")
         count = max(1, min(int(payload.get("count", 100)), 500))
-        run(None, count)
+        run(None, count, demo=True)
         refresh_xlsx()
         rows = read_rows()
         self._send_json(
             {
                 "rows": rows,
                 "meta": build_meta(rows),
-                "message": f"Türkiye odaklı {len(rows)} HR lead üretildi ve tablolar güncellendi.",
+                "message": f"Lokal test için {len(rows)} demo seed lead üretildi. Teslimde verified CSV kullanılmalı.",
             }
         )
 

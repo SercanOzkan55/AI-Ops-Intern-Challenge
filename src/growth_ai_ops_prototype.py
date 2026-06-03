@@ -310,9 +310,16 @@ def write_workflow_blueprint(path: Path) -> None:
     path.write_text(json.dumps(workflow, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def run(input_csv: Path | None, limit: int, seed: int | None = None) -> None:
+def run(input_csv: Path | None, limit: int, seed: int | None = None, demo: bool = False) -> None:
     ensure_dirs()
-    leads = read_leads(input_csv) if input_csv else build_demo_leads(limit, seed=seed)
+    if input_csv:
+        leads = read_leads(input_csv)
+    elif demo:
+        leads = build_demo_leads(limit, seed=seed)
+    else:
+        raise ValueError("Verified CSV gerekli. Demo data icin explicit olarak --demo kullan.")
+    if not leads:
+        raise ValueError("Input CSV en az bir valid lead satiri icermeli.")
     raw_rows = [lead.__dict__ for lead in leads]
     enriched_rows = [enrich_lead(lead) for lead in leads]
 
@@ -370,12 +377,18 @@ def run(input_csv: Path | None, limit: int, seed: int | None = None) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Growth Automation & AI Ops HR outbound prototype")
-    parser.add_argument("--input-csv", type=Path, help="Optional raw lead CSV to process instead of demo seed data.")
-    parser.add_argument("--limit", type=int, default=100, help="Number of demo leads to generate when no input CSV is provided.")
+    parser.add_argument("--input-csv", type=Path, help="Verified raw lead CSV to process.")
+    parser.add_argument("--demo", action="store_true", help="Generate demo seed data explicitly for local testing.")
+    parser.add_argument("--limit", type=int, default=100, help="Number of demo leads to generate with --demo.")
     parser.add_argument("--seed", type=int, help="Optional random seed for reproducible Turkish HR demo leads.")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if not args.input_csv and not args.demo:
+        parser.error("Gercek/verifiye veri icin --input-csv data/verified_leads.csv kullan. Demo test icin --demo ekle.")
+    if args.input_csv and not args.input_csv.exists():
+        parser.error(f"Input CSV bulunamadi: {args.input_csv}")
+    return args
 
 
 if __name__ == "__main__":
     args = parse_args()
-    run(args.input_csv, args.limit, seed=args.seed)
+    run(args.input_csv, args.limit, seed=args.seed, demo=args.demo)

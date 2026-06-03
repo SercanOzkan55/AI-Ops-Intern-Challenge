@@ -2,7 +2,7 @@
 
 Bu repo, Konuşarak Öğren için Türkiye'deki insan kaynakları profesyonellerine yönelik minimum çalışan bir outbound growth automation prototipidir.
 
-Amaç: 100 lead'lik örnek HR listesi oluşturmak, lead'leri zenginleştirmek, kişiselleştirilmiş LinkedIn DM / cold email üretmek, lead scoring yapmak ve süreci CRM mantığıyla yönetilebilir hale getirmek.
+Amaç: gerçek/verifiye 100 HR lead'ini içe almak, lead'leri zenginleştirmek, kişiselleştirilmiş LinkedIn DM / cold email üretmek, lead scoring yapmak ve süreci CRM mantığıyla yönetilebilir hale getirmek.
 
 ## Demo
 
@@ -17,7 +17,7 @@ Amaç: 100 lead'lik örnek HR listesi oluşturmak, lead'leri zenginleştirmek, k
 |---|---|
 | `src/growth_ai_ops_prototype.py` | Lead üretimi, enrichment, outreach generation ve CRM pipeline motoru |
 | `src/gui_app.py` | Lokal web arayüzü |
-| `data/raw_hr_leads_sample.csv` | Demo seed sample; yalnızca sistemi test etmek için |
+| `data/raw_hr_leads_sample.csv` | Pipeline çalışınca oluşan normalize ham lead çıktısı |
 | `data/verified_leads.csv` | Gerçek/verifiye lead export dosyası; kullanıcı tarafından LinkedIn/Apollo/Clay/Kariyer.net benzeri kaynaklardan doldurulur |
 | `output/google_sheets_hr_leads.csv` | Google Sheets kolonlarıyla ana teslim tablosu |
 | `output/konusarak-ogren-hr-outbound-google-sheets.xlsx` | Google Sheets/Excel'e import edilebilir workbook |
@@ -53,20 +53,26 @@ Ad Soyad | Şirket | Ünvan | LinkedIn URL | Email | Sektör | Şirket büyükl�
 
 ## Çalıştırma
 
-Python dışında zorunlu dependency yok.
+Python dışında zorunlu dependency yok. Ana teslim akışı gerçek/verifiye CSV ile çalışır:
 
 ```bash
-python src/growth_ai_ops_prototype.py
+python src/growth_ai_ops_prototype.py --input-csv data/verified_leads.csv
 ```
 
 Bu komut şu dosyaları günceller:
 
-- `data/raw_hr_leads_sample.csv` demo seed çıktısı
+- `data/raw_hr_leads_sample.csv` import edilen verified lead ham çıktısı
 - `output/google_sheets_hr_leads.csv`
 - `output/enriched_hr_leads.csv`
 - `output/outreach_messages.csv`
 - `output/crm_pipeline.csv`
 - `output/workflow_steps.csv`
+
+Demo seed data yalnızca lokal test içindir ve explicit flag ister:
+
+```bash
+python src/growth_ai_ops_prototype.py --demo
+```
 
 Lokal GUI için:
 

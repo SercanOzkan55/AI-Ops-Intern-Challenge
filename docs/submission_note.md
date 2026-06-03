@@ -6,7 +6,7 @@ Konuşarak Öğren'in Türkiye'deki HR profesyonellerine outbound büyüme yapab
 
 Sistem şu çıktıları üretiyor:
 
-- 100 kişilik HR lead sample listesi
+- Gerçek/verifiye 100 kişilik HR lead CSV ingestion akışı
 - Şirket sektörü ve büyüklüğü
 - Kişinin HR rolüne göre persona
 - Olası pain point
@@ -19,7 +19,7 @@ Sistem şu çıktıları üretiyor:
 
 ## 2. Nasıl çalışıyor?
 
-Önce lead listesi alınır. Demo'da bu liste script tarafından üretilir; gerçek kullanımda LinkedIn Sales Navigator, Apollo, Clay veya manuel doğrulanmış CSV kullanılabilir.
+Önce gerçek/verifiye lead listesi alınır. Kaynak LinkedIn Sales Navigator, Apollo, Clay, kariyer platformları veya manuel doğrulanmış CSV olabilir. Email bulunmuyorsa boş bırakılır; sistem kişisel email uydurmaz.
 
 Sonra Python script'i lead'leri zenginleştirir. Şirket profili, sektör, büyüklük, rol ve persona sinyallerinden olası İngilizce ihtiyacı çıkarır. Bu sinyallerle outreach mesajı oluşturur ve lead'i CRM stage'e atar.
 
@@ -39,7 +39,7 @@ akışını ayrı parçalar olarak tasarladım.
 ## 4. Demo nasıl test edilir?
 
 ```bash
-python src/growth_ai_ops_prototype.py
+python src/growth_ai_ops_prototype.py --input-csv data/verified_leads.csv
 ```
 
 Çalıştırınca şu dosyalar oluşur:

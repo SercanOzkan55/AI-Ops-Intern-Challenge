@@ -156,7 +156,7 @@ def generate_demo_leads(count: int, progress_slot, log_slot) -> list[dict[str, s
         progress.progress(index / (len(messages) + 1))
         time.sleep(0.08)
         if index == 3:
-            run(None, count, seed=random.randint(1, 1_000_000))
+            run(None, count, seed=random.randint(1, 1_000_000), demo=True)
     refresh_xlsx()
     progress.progress(1.0)
     log_slot.caption("Tamamlandi. Demo tablo hazir.")
