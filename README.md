@@ -159,13 +159,20 @@ Aktif çalışan kısım: lead generation, enrichment, outreach generation, lead
 
 ## GitHub Pages
 
-`docs/index.html` statik demo sayfasıdır. GitHub Actions workflow'u `docs` klasörünü Pages'e deploy edecek şekilde eklendi:
+`docs/index.html` statik demo sayfasıdır. Yayına almak için GitHub'da şu ayarı yap:
 
 ```text
-.github/workflows/pages.yml
+Settings → Pages → Build and deployment
+Source: Deploy from a branch
+Branch: master
+Folder: /docs
 ```
 
-Workflow çalışınca repo için Pages linki GitHub tarafından üretilecektir.
+Bu ayardan sonra demo şu adreste yayınlanır:
+
+```text
+https://sercanozkan55.github.io/AI-Ops-Intern-Challenge/
+```
 
 ## Not
 
