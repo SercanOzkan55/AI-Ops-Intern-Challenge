@@ -17,7 +17,8 @@ Amaç: 100 lead'lik örnek HR listesi oluşturmak, lead'leri zenginleştirmek, k
 |---|---|
 | `src/growth_ai_ops_prototype.py` | Lead üretimi, enrichment, outreach generation ve CRM pipeline motoru |
 | `src/gui_app.py` | Lokal web arayüzü |
-| `data/raw_hr_leads_sample.csv` | 100 kişilik Türkiye HR lead sample listesi |
+| `data/raw_hr_leads_sample.csv` | Demo seed sample; yalnızca sistemi test etmek için |
+| `data/verified_leads.csv` | Gerçek/verifiye lead export dosyası; kullanıcı tarafından LinkedIn/Apollo/Clay/Kariyer.net benzeri kaynaklardan doldurulur |
 | `output/google_sheets_hr_leads.csv` | Google Sheets kolonlarıyla ana teslim tablosu |
 | `output/konusarak-ogren-hr-outbound-google-sheets.xlsx` | Google Sheets/Excel'e import edilebilir workbook |
 | `output/enriched_hr_leads.csv` | Detaylı enrichment çıktısı |
@@ -60,7 +61,7 @@ python src/growth_ai_ops_prototype.py
 
 Bu komut şu dosyaları günceller:
 
-- `data/raw_hr_leads_sample.csv`
+- `data/raw_hr_leads_sample.csv` demo seed çıktısı
 - `output/google_sheets_hr_leads.csv`
 - `output/enriched_hr_leads.csv`
 - `output/outreach_messages.csv`
@@ -82,7 +83,7 @@ http://127.0.0.1:8765
 GUI içinde:
 
 - Mevcut 100 lead tablosu görüntülenir.
-- `Yeni 100 Lead Üret` butonu Türkiye odaklı yeni random HR lead seti üretir.
+- Demo seed butonu yalnızca pipeline'ı test etmek için örnek veri üretir; ana kullanım gerçek CSV upload/import akışıdır.
 - CSV ve XLSX çıktıları indirilebilir.
 - Workflow adımları görünür.
 
@@ -138,10 +139,16 @@ Beklenen kolonlar:
 lead_id,full_name,company,title,linkedin_url,email,location,source
 ```
 
-Boş template:
+Boş template şu dosyada tutulur:
 
 ```text
 data/verified_leads_template.csv
+```
+
+Gerçek teslim dosyası şu isimle hazırlanmalıdır:
+
+```text
+data/verified_leads.csv
 ```
 
 ## Lead Zenginleştirme
@@ -200,7 +207,7 @@ Lead score'a göre stage atanır:
 - Deliverability mantığı
 - Multi-step outreach kurgusu
 
-Aktif çalışan kısım: lead generation, enrichment, outreach generation, lead scoring, CRM stage ve lokal GUI.
+Aktif çalışan kısım: verified lead CSV ingestion, cleaning, AI enrichment, outreach generation, lead scoring, CRM stage ve GUI.
 Public canlı demo için `streamlit_app.py` kullanılabilir.
 
 ## GitHub Pages
