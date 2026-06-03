@@ -42,8 +42,6 @@ LinkedIn Search
 
 Bu prototip doğrudan LinkedIn scraping yapmaz ve kişisel email uydurmaz. Challenge metnindeki "varsa email" beklentisine uygun şekilde email bulunmuyorsa boş bırakılır. Gerçek kullanımda LinkedIn Sales Navigator, Apollo, Clay veya manuel doğrulanmış CSV export sisteme input olarak verilebilir.
 
-Streamlit arayüzündeki demo email enrichment gerçek email finder değildir; yalnızca jüriye email enrichment mantığını göstermek için `.example` domainli, gönderilemez örnek adres üretir. Gerçek outreach için doğrulanmış business email CSV/API kaynağı gerekir.
-
 ## Google Sheets Kolonları
 
 Ana çıktı şu kolonlarla üretilir:
@@ -106,13 +104,22 @@ Deploy
 
 Streamlit Cloud `requirements.txt` dosyasını okuyup `streamlit` paketini otomatik kurar.
 
+Streamlit arayüzünde ana kullanım gerçek/verifiye CSV yükleme modudur. Önerilen kaynaklar:
+
+- LinkedIn Sales Navigator export
+- Apollo / Clay export
+- Kariyer platformlarından manuel doğrulanmış HR listesi
+- Şirket web siteleri veya izinli recruitment database export
+
+Random seed data yalnızca pipeline'ın nasıl çalıştığını göstermek için demo fallback olarak tutulur; ana teslim gerçek/verifiye lead CSV ile yapılmalıdır.
+
 Streamlit arayüzünde jüri/demo kullanımı için şu kontroller vardır:
 
 - `st.session_state` ile üretilen lead tablosu indirme butonlarında kaybolmaz.
 - Yeni lead üretiminde spinner, progress bar ve işlem log'u görünür.
 - Sektör, şirket büyüklüğü ve minimum lead score filtreleri vardır.
 - Boş LinkedIn URL / Email hücreleri arayüzde `-` olarak gösterilir.
-- Opsiyonel `Demo email enrichment göster` kontrolü, gerçek email bulmadan `.example` domainli gönderilemez örnek email formatı üretir.
+- Email alanı sadece yüklenen verified CSV'de varsa korunur; uygulama random gerçek email uydurmaz.
 - Üst metriklerde toplam lead, bulunan e-posta, ortalama İngilizce ihtiyacı, ortalama lead score ve priority outreach görünür.
 - Seçilen lead için LinkedIn DM ve cold email önizleme alanı vardır.
 - Kod içinde hardcoded API key yoktur; production entegrasyonunda secret yönetimi `st.secrets` veya environment variable ile yapılmalıdır.
@@ -129,6 +136,12 @@ Beklenen kolonlar:
 
 ```text
 lead_id,full_name,company,title,linkedin_url,email,location,source
+```
+
+Boş template:
+
+```text
+data/verified_leads_template.csv
 ```
 
 ## Lead Zenginleştirme

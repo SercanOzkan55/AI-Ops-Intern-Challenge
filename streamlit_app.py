@@ -9,7 +9,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from src.growth_ai_ops_prototype import OUTPUT_DIR, ROOT, run
+from src.growth_ai_ops_prototype import Lead, OUTPUT_DIR, ROOT, enrich_lead, run
 
 
 LEADS_CSV = OUTPUT_DIR / "google_sheets_hr_leads.csv"
@@ -38,53 +38,21 @@ COLUMNS = [
 ]
 
 WORKFLOW_STEPS = [
-    "LinkedIn Search",
-    "Google Sheets",
+    "LinkedIn Search / Platform Export",
+    "CSV Upload",
     "Cleaning",
     "AI Enrichment",
     "Outreach Generation",
     "CRM Status",
 ]
 
-DEMO_EMAIL_DOMAINS = {
-    "Trendyol": "trendyol.example",
-    "Getir": "getir.example",
-    "Hepsiburada": "hepsiburada.example",
-    "Yemeksepeti": "yemeksepeti.example",
-    "Peak Games": "peakgames.example",
-    "Dream Games": "dreamgames.example",
-    "Turkcell": "turkcell.example",
-    "Vodafone Turkey": "vodafone.example",
-    "Garanti BBVA": "garantibbva.example",
-    "Akbank": "akbank.example",
-    "Yapi Kredi": "yapikredi.example",
-    "Isbank": "isbank.example",
-    "Ford Otosan": "fordotosan.example",
-    "Tofas": "tofas.example",
-    "Arcelik": "arcelik.example",
-    "Vestel": "vestel.example",
-    "LC Waikiki": "lcwaikiki.example",
-    "Mavi": "mavi.example",
-    "Eczacibasi": "eczacibasi.example",
-    "Koc Holding": "kocholding.example",
-    "Sabanci Holding": "sabanci.example",
-    "Logo Yazilim": "logoyazilim.example",
-    "Insider": "insider.example",
-    "Papara": "papara.example",
-    "Colendi": "colendi.example",
-}
 
-
-st.set_page_config(
-    page_title="Turkiye HR Lead Generator",
-    layout="wide",
-)
+st.set_page_config(page_title="Turkiye HR Lead Enrichment", layout="wide")
 
 
 def read_rows() -> list[dict[str, str]]:
     if not LEADS_CSV.exists():
         run(None, 100, seed=random.randint(1, 1_000_000))
-
     with LEADS_CSV.open(newline="", encoding="utf-8-sig") as handle:
         return list(csv.DictReader(handle))
 
@@ -98,34 +66,6 @@ def clean_cell(value: object) -> str:
 
 def display_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     return [{column: clean_cell(row.get(column)) for column in COLUMNS} for row in rows]
-
-
-def email_name_slug(full_name: str) -> str:
-    replacements = {
-        "ı": "i",
-        "ğ": "g",
-        "ü": "u",
-        "ş": "s",
-        "ö": "o",
-        "ç": "c",
-    }
-    normalized = full_name.lower()
-    for source, target in replacements.items():
-        normalized = normalized.replace(source, target)
-    return ".".join(part for part in normalized.split() if part)
-
-
-def enrich_demo_emails(rows: list[dict[str, str]]) -> list[dict[str, str]]:
-    enriched: list[dict[str, str]] = []
-    for row in rows:
-        next_row = dict(row)
-        if not next_row.get("Email"):
-            domain = DEMO_EMAIL_DOMAINS.get(next_row.get(COL_COMPANY, ""))
-            name = email_name_slug(next_row.get("Ad Soyad", ""))
-            if domain and name:
-                next_row["Email"] = f"{name}@{domain}"
-        enriched.append(next_row)
-    return enriched
 
 
 def rows_to_csv_bytes(rows: list[dict[str, str]]) -> bytes:
@@ -146,7 +86,6 @@ def refresh_xlsx() -> None:
         Path.home() / ".cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
         Path("node"),
     ]
-
     for node_exe in node_candidates:
         try:
             subprocess.run(
@@ -162,53 +101,94 @@ def refresh_xlsx() -> None:
             continue
 
 
-def generate_new_leads(count: int, progress_slot, log_slot) -> list[dict[str, str]]:
+def normalize_uploaded_row(row: dict[str, str], index: int) -> Lead:
+    full_name = row.get("Ad Soyad") or row.get("full_name") or row.get("name") or ""
+    company = row.get(COL_COMPANY) or row.get("company") or row.get("Company") or ""
+    title = row.get(COL_TITLE) or row.get("title") or row.get("Title") or ""
+    linkedin_url = row.get("LinkedIn URL") or row.get("linkedin_url") or row.get("linkedin") or ""
+    email = row.get("Email") or row.get("email") or ""
+    source = row.get("source") or row.get("Source") or "Uploaded verified CSV"
+
+    return Lead(
+        lead_id=row.get("lead_id") or f"UPLOAD-{index + 1:03d}",
+        full_name=full_name.strip(),
+        company=company.strip(),
+        title=title.strip(),
+        linkedin_url=linkedin_url.strip(),
+        email=email.strip(),
+        location=(row.get("location") or row.get("Location") or "Turkey").strip(),
+        source=source.strip(),
+    )
+
+
+def sheet_row_from_enriched(row: dict[str, object]) -> dict[str, object]:
+    return {
+        "Ad Soyad": row["full_name"],
+        COL_COMPANY: row["company"],
+        COL_TITLE: row["title"],
+        "LinkedIn URL": row["linkedin_url"],
+        "Email": row["email"],
+        COL_SECTOR: row["company_sector"],
+        COL_SIZE: row["company_size"],
+        "Pain point": row["likely_pain_point"],
+        COL_ENGLISH_NEED: row["estimated_english_need_score"],
+        "Outreach angle": row["outreach_angle"],
+        "LinkedIn DM": row["linkedin_dm"],
+        "Cold email": f"Subject: {row['email_subject']}\n\n{row['email_body']}",
+        "Lead score": row["lead_score"],
+    }
+
+
+def process_uploaded_csv(uploaded_file) -> list[dict[str, object]]:
+    text = uploaded_file.getvalue().decode("utf-8-sig")
+    reader = csv.DictReader(io.StringIO(text))
+    leads = [normalize_uploaded_row(row, index) for index, row in enumerate(reader)]
+    valid_leads = [lead for lead in leads if lead.full_name and lead.company and lead.title]
+    return [sheet_row_from_enriched(enrich_lead(lead)) for lead in valid_leads]
+
+
+def generate_demo_leads(count: int, progress_slot, log_slot) -> list[dict[str, str]]:
     progress = progress_slot.progress(0)
     messages = [
-        "LinkedIn arama niyeti hazirlaniyor...",
-        "Turkiye HR lead havuzu olusturuluyor...",
+        "Demo arama niyeti hazirlaniyor...",
+        "Turkiye HR seed havuzu olusturuluyor...",
         "Cleaning ve duplicate kontrolu yapiliyor...",
-        "AI enrichment sinyalleri uretiliyor...",
+        "Enrichment sinyalleri uretiliyor...",
         "Outreach mesajlari ve lead score hesaplaniyor...",
         "CSV/XLSX ciktilari guncelleniyor...",
     ]
-
     for index, message in enumerate(messages, start=1):
         log_slot.caption(message)
         progress.progress(index / (len(messages) + 1))
         time.sleep(0.08)
         if index == 3:
             run(None, count, seed=random.randint(1, 1_000_000))
-
     refresh_xlsx()
     progress.progress(1.0)
-    log_slot.caption("Tamamlandi. Yeni tablo hazir.")
+    log_slot.caption("Tamamlandi. Demo tablo hazir.")
     return read_rows()
 
 
-def score_summary(rows: list[dict[str, str]]) -> dict[str, float | int]:
+def score_summary(rows: list[dict[str, object]]) -> dict[str, float | int]:
     lead_scores = [int(row.get("Lead score") or 0) for row in rows]
     english_scores = [int(row.get(COL_ENGLISH_NEED) or 0) for row in rows]
     email_count = sum(1 for row in rows if row.get("Email"))
+    linkedin_count = sum(1 for row in rows if row.get("LinkedIn URL"))
     return {
         "total": len(rows),
         "average_lead_score": round(sum(lead_scores) / len(lead_scores), 1) if lead_scores else 0,
         "priority_count": sum(1 for score in lead_scores if score >= 90),
         "email_count": email_count,
+        "linkedin_count": linkedin_count,
         "average_english_need": round(sum(english_scores) / len(english_scores), 1) if english_scores else 0,
     }
 
 
-def unique_values(rows: list[dict[str, str]], column: str) -> list[str]:
-    return sorted({row.get(column, "") for row in rows if row.get(column, "")})
+def unique_values(rows: list[dict[str, object]], column: str) -> list[str]:
+    return sorted({str(row.get(column, "")) for row in rows if row.get(column)})
 
 
-def filter_rows(
-    rows: list[dict[str, str]],
-    sectors: list[str],
-    sizes: list[str],
-    min_score: int,
-) -> list[dict[str, str]]:
+def filter_rows(rows: list[dict[str, object]], sectors: list[str], sizes: list[str], min_score: int) -> list[dict[str, object]]:
     filtered = []
     for row in rows:
         score = int(row.get("Lead score") or 0)
@@ -223,21 +203,32 @@ def filter_rows(
 
 
 if "rows" not in st.session_state:
-    st.session_state.rows = read_rows()
+    st.session_state.rows = []
+if "data_mode" not in st.session_state:
+    st.session_state.data_mode = "Gercek veri bekleniyor"
 
-st.title("Türkiye HR Lead Generator")
+st.title("Türkiye HR Lead Enrichment")
 st.caption(
-    "Konuşarak Öğren için Türkiye odaklı HR lead enrichment, AI outreach, lead scoring ve CRM pipeline prototipi."
+    "LinkedIn/Sales Navigator, Apollo, Clay veya kariyer platformlarından alınan gerçek HR lead CSV'lerini enrich eden outreach prototipi."
 )
 
 with st.sidebar:
-    st.header("Kontrol Paneli")
-    search_intent = st.text_area(
-        "Arama niyeti",
-        value="HR Manager Turkey\nİnsan Kaynakları Müdürü\nTalent Acquisition Turkey\nPeople & Culture Manager Türkiye\nLearning & Development Manager Turkey",
-        height=130,
+    st.header("Veri Kaynağı")
+    st.markdown(
+        """
+        Ana akış gerçek/verifiye CSV içindir.
+
+        Beklenen minimum kolonlar:
+        `Ad Soyad`, `Şirket`, `Ünvan`, `LinkedIn URL`, `Email`
+        """
     )
-    lead_count = st.number_input("Lead sayısı", min_value=10, max_value=500, value=100, step=10)
+    uploaded_file = st.file_uploader("Verified HR lead CSV yükle", type=["csv"])
+    process_upload = st.button("CSV'yi Enrich Et", type="primary", use_container_width=True)
+
+    st.divider()
+    st.subheader("Demo fallback")
+    lead_count = st.number_input("Demo lead sayısı", min_value=10, max_value=500, value=100, step=10)
+    demo_clicked = st.button("Sadece Demo Seed Data Üret", use_container_width=True)
 
     st.divider()
     st.subheader("Filtreler")
@@ -245,37 +236,46 @@ with st.sidebar:
     size_filter = st.multiselect("Şirket büyüklüğü", unique_values(st.session_state.rows, COL_SIZE))
     min_score_filter = st.slider("Minimum lead score", min_value=0, max_value=100, value=0, step=5)
 
-    st.divider()
-    demo_email_enabled = st.checkbox(
-        "Demo email enrichment göster",
-        value=False,
-        help="Gerçek email bulmaz. Sadece .example domainli, gönderilemez demo adres formatı üretir.",
-    )
-    generate_clicked = st.button("Yeni 100 Lead Üret", type="primary", use_container_width=True)
-    st.caption("Demo veri üretir. Gerçek kullanımda Apollo, Clay veya Sales Navigator CSV export bağlanabilir.")
+if process_upload:
+    if uploaded_file is None:
+        st.error("Önce LinkedIn/Sales Navigator/Apollo/Clay export CSV yüklemelisin.")
+    else:
+        with st.spinner("Gerçek lead CSV enrich ediliyor..."):
+            st.session_state.rows = process_uploaded_csv(uploaded_file)
+            st.session_state.data_mode = "Verified CSV"
+        st.success(f"{len(st.session_state.rows)} gerçek/verifiye lead enrich edildi.")
 
-if generate_clicked:
+if demo_clicked:
     progress_slot = st.empty()
     log_slot = st.empty()
-    with st.spinner("AI lead enrichment ve outreach üretimi çalışıyor, lütfen bekleyin..."):
-        st.session_state.rows = generate_new_leads(int(lead_count), progress_slot, log_slot)
-    st.success(f"Türkiye odaklı {len(st.session_state.rows)} HR lead üretildi ve tablolar güncellendi.")
+    with st.spinner("Demo seed data üretiliyor..."):
+        st.session_state.rows = generate_demo_leads(int(lead_count), progress_slot, log_slot)
+        st.session_state.data_mode = "Demo seed data"
+    st.warning("Bu tablo demo seed datadır; ana teslim için verified CSV kullanılmalıdır.")
 
-rows = enrich_demo_emails(st.session_state.rows) if demo_email_enabled else st.session_state.rows
+rows = st.session_state.rows
+
+if not rows:
+    st.info(
+        "Başlamak için sol menüden gerçek HR lead CSV yükle. Demo seed data yalnızca sistemi test etmek için kullanılmalıdır."
+    )
+    st.stop()
+
 filtered_rows = filter_rows(rows, sector_filter, size_filter, min_score_filter)
 summary = score_summary(rows)
 
-if demo_email_enabled:
-    st.warning(
-        "Demo email enrichment açık: Email alanları .example domainiyle gösterilir ve gerçek gönderim adresi değildir."
-    )
+if st.session_state.data_mode == "Demo seed data":
+    st.warning("Şu an demo seed data görüntüleniyor. Gerçek teslim için verified CSV yükle.")
+else:
+    st.success("Verified CSV modu aktif. Email varsa korunur, yoksa boş bırakılır.")
 
-metric_cols = st.columns(5)
+metric_cols = st.columns(6)
 metric_cols[0].metric("Toplam lead", summary["total"])
-metric_cols[1].metric("Bulunan e-posta", summary["email_count"])
-metric_cols[2].metric("Ort. İngilizce ihtiyacı", summary["average_english_need"])
-metric_cols[3].metric("Ort. lead score", summary["average_lead_score"])
-metric_cols[4].metric("Priority outreach", summary["priority_count"])
+metric_cols[1].metric("LinkedIn URL", summary["linkedin_count"])
+metric_cols[2].metric("Bulunan e-posta", summary["email_count"])
+metric_cols[3].metric("Ort. İngilizce ihtiyacı", summary["average_english_need"])
+metric_cols[4].metric("Ort. lead score", summary["average_lead_score"])
+metric_cols[5].metric("Priority outreach", summary["priority_count"])
 
 st.subheader("Workflow")
 workflow_cols = st.columns(len(WORKFLOW_STEPS))
@@ -283,22 +283,8 @@ for column, label in zip(workflow_cols, WORKFLOW_STEPS):
     column.info(label)
 
 st.subheader("HR Leads")
-st.caption(f"{len(filtered_rows)} lead gösteriliyor. Boş LinkedIn URL ve Email alanları arayüzde '-' olarak gösterilir.")
-
-summary_columns = ["Ad Soyad", COL_COMPANY, COL_TITLE, COL_SECTOR, COL_SIZE, COL_ENGLISH_NEED, "Lead score"]
-st.dataframe(
-    display_rows(filtered_rows),
-    use_container_width=True,
-    height=520,
-    column_order=COLUMNS,
-)
-
-with st.expander("Hızlı özet tablo", expanded=False):
-    st.dataframe(
-        [{column: clean_cell(row.get(column)) for column in summary_columns} for row in filtered_rows],
-        use_container_width=True,
-        hide_index=True,
-    )
+st.caption(f"{len(filtered_rows)} lead gösteriliyor. Email yoksa boş kalır; sistem random gerçek email uydurmaz.")
+st.dataframe(display_rows(filtered_rows), use_container_width=True, height=520, column_order=COLUMNS)
 
 st.subheader("Mesaj Önizleme")
 if filtered_rows:
@@ -319,7 +305,7 @@ if filtered_rows:
 else:
     st.warning("Filtrelere uyan lead bulunamadı.")
 
-download_cols = st.columns(3)
+download_cols = st.columns(2)
 download_cols[0].download_button(
     "Filtrelenen CSV indir",
     data=rows_to_csv_bytes(filtered_rows),
@@ -335,29 +321,13 @@ download_cols[1].download_button(
     use_container_width=True,
 )
 
-if XLSX_FILE.exists():
-    download_cols[2].download_button(
-        "XLSX indir",
-        data=XLSX_FILE.read_bytes(),
-        file_name="konusarak-ogren-hr-outbound-google-sheets.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        use_container_width=True,
-    )
-else:
-    download_cols[2].button("XLSX hazırlanmadı", disabled=True, use_container_width=True)
-
-with st.expander("Sistem notu"):
+with st.expander("Kaynak ve güvenlik notu"):
     st.markdown(
-        f"""
-        **Arama niyeti**
-
-        ```text
-        {search_intent}
-        ```
-
-        Bu public demo doğrudan LinkedIn scraping yapmaz ve kişisel email uydurmaz.
-        Kod içinde hardcoded API key yoktur; production kullanımında API anahtarları
-        `st.secrets` veya güvenli environment variable üzerinden yönetilmelidir.
-        Email varsa eklenir, yoksa export dosyasında boş bırakılır.
+        """
+        - LinkedIn login arkasından otomatik scraping yapılmaz.
+        - En sağlıklı kaynaklar: Sales Navigator export, Apollo, Clay, izinli recruitment database export veya manuel doğrulanmış CSV.
+        - Email sadece kaynak CSV'de varsa korunur; yoksa boş bırakılır.
+        - Kod içinde hardcoded API key yoktur. Production entegrasyonunda secret yönetimi `st.secrets` veya environment variable ile yapılmalıdır.
+        - Uygulama SMTP/Gmail/SendGrid gönderimi yapmaz; cold email metnini preview olarak üretir.
         """
     )
