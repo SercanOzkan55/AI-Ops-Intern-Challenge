@@ -104,6 +104,16 @@ Deploy
 
 Streamlit Cloud `requirements.txt` dosyasını okuyup `streamlit` paketini otomatik kurar.
 
+Streamlit arayüzünde jüri/demo kullanımı için şu kontroller vardır:
+
+- `st.session_state` ile üretilen lead tablosu indirme butonlarında kaybolmaz.
+- Yeni lead üretiminde spinner, progress bar ve işlem log'u görünür.
+- Sektör, şirket büyüklüğü ve minimum lead score filtreleri vardır.
+- Boş LinkedIn URL / Email hücreleri arayüzde `-` olarak gösterilir.
+- Üst metriklerde toplam lead, bulunan e-posta, ortalama İngilizce ihtiyacı, ortalama lead score ve priority outreach görünür.
+- Seçilen lead için LinkedIn DM ve cold email önizleme alanı vardır.
+- Kod içinde hardcoded API key yoktur; production entegrasyonunda secret yönetimi `st.secrets` veya environment variable ile yapılmalıdır.
+
 ## Kendi CSV'ini İşleme
 
 Gerçek veriyle çalışmak için:
