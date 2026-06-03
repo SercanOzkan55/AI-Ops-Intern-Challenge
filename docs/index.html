@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Konuşarak Öğren HR Lead Automation</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #1d2433;
+      --muted: #667085;
+      --line: #d9dee8;
+      --accent: #0f766e;
+      --soft: #e8f3f1;
+      --warm: #fff5dd;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.45 Arial, Helvetica, sans-serif;
+    }
+    header {
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      padding: 24px 28px 18px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 25px;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 17px;
+    }
+    p { margin: 0; }
+    .sub { color: var(--muted); max-width: 980px; }
+    main { padding: 18px 28px 32px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .card, .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .card { padding: 14px; }
+    .card span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    .card strong { font-size: 22px; }
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(120px, 1fr));
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .step {
+      background: var(--warm);
+      border: 1px solid #efd99f;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .panel { overflow: hidden; }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .button {
+      display: inline-block;
+      border-radius: 6px;
+      padding: 9px 11px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .table-wrap {
+      overflow: auto;
+      max-height: 70vh;
+    }
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+      width: 100%;
+      min-width: 1900px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid #edf0f5;
+      padding: 8px 10px;
+      vertical-align: top;
+      background: #fff;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: #eef4f3;
+      text-align: left;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 2;
+    }
+    td {
+      max-width: 320px;
+      word-break: break-word;
+    }
+    td.score {
+      text-align: center;
+      font-weight: 700;
+      background: var(--soft);
+      min-width: 78px;
+    }
+    .note {
+      margin: 14px 0;
+      color: var(--muted);
+    }
+    @media (max-width: 980px) {
+      header, main { padding-left: 16px; padding-right: 16px; }
+      .grid, .workflow { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Konuşarak Öğren HR Lead Automation</h1>
+    <p class="sub">Türkiye'deki insan kaynakları profesyonelleri için lead enrichment, AI outreach, lead scoring ve CRM pipeline prototipi.</p>
+  </header>
+
+  <main>
+    <section class="grid">
+      <div class="card"><span>Toplam lead</span><strong id="total">0</strong></div>
+      <div class="card"><span>Ortalama skor</span><strong id="avg">0</strong></div>
+      <div class="card"><span>Priority outreach</span><strong id="priority">0</strong></div>
+      <div class="card"><span>Kolon sayısı</span><strong>13</strong></div>
+    </section>
+
+    <section class="workflow" aria-label="Workflow">
+      <div class="step">LinkedIn Search</div>
+      <div class="step">Google Sheets</div>
+      <div class="step">Cleaning</div>
+      <div class="step">AI Enrichment</div>
+      <div class="step">Outreach Generation</div>
+      <div class="step">CRM Status</div>
+    </section>
+
+    <p class="note">Bu sayfa statik GitHub Pages demosudur. Yeni lead üretimi için lokal GUI: <code>python src/gui_app.py</code></p>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>HR Leads</h2>
+          <p class="sub" id="status">CSV yükleniyor...</p>
+        </div>
+        <div class="actions">
+          <a class="button" href="assets/google_sheets_hr_leads.csv">CSV indir</a>
+          <a class="button" href="assets/konusarak-ogren-hr-outbound-google-sheets.xlsx">XLSX indir</a>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead id="thead"></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const columns = [
+      "Ad Soyad", "Şirket", "Ünvan", "LinkedIn URL", "Email", "Sektör",
+      "Şirket büyüklüğü", "Pain point", "İngilizce ihtiyacı tahmini",
+      "Outreach angle", "LinkedIn DM", "Cold email", "Lead score"
+    ];
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [], value = "", quoted = false;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
+        if (char === '"' && quoted && next === '"') {
+          value += '"';
+          i++;
+        } else if (char === '"') {
+          quoted = !quoted;
+        } else if (char === "," && !quoted) {
+          row.push(value);
+          value = "";
+        } else if ((char === "\n" || char === "\r") && !quoted) {
+          if (char === "\r" && next === "\n") i++;
+          row.push(value);
+          if (row.some(cell => cell !== "")) rows.push(row);
+          row = [];
+          value = "";
+        } else {
+          value += char;
+        }
+      }
+      if (value || row.length) {
+        row.push(value);
+        rows.push(row);
+      }
+      const headers = rows.shift();
+      return rows.map(cells => Object.fromEntries(headers.map((header, index) => [header, cells[index] ?? ""])));
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function render(rows) {
+      document.getElementById("thead").innerHTML = "<tr>" + columns.map(col => `<th>${col}</th>`).join("") + "</tr>";
+      document.getElementById("tbody").innerHTML = rows.map(row => {
+        return "<tr>" + columns.map(col => {
+          const cls = col === "Lead score" ? " class='score'" : "";
+          return `<td${cls}>${escapeHtml(row[col])}</td>`;
+        }).join("") + "</tr>";
+      }).join("");
+
+      const scores = rows.map(row => Number(row["Lead score"] || 0));
+      const total = rows.length;
+      const avg = total ? (scores.reduce((sum, score) => sum + score, 0) / total).toFixed(1) : "0";
+      const priority = scores.filter(score => score >= 90).length;
+      document.getElementById("total").textContent = total;
+      document.getElementById("avg").textContent = avg;
+      document.getElementById("priority").textContent = priority;
+      document.getElementById("status").textContent = `${total} lead yüklendi.`;
+    }
+
+    fetch("assets/google_sheets_hr_leads.csv")
+      .then(response => response.text())
+      .then(text => render(parseCsv(text)))
+      .catch(() => {
+        document.getElementById("status").textContent = "CSV yüklenemedi.";
+      });
+  </script>
+</body>
+</html>
