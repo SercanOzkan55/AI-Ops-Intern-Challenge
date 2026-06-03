@@ -114,6 +114,12 @@ Streamlit arayüzünde ana kullanım gerçek/verifiye CSV yükleme modudur. Öne
 
 Random seed data yalnızca pipeline'ın nasıl çalıştığını göstermek için demo fallback olarak tutulur; ana teslim gerçek/verifiye lead CSV ile yapılmalıdır.
 
+Streamlit'te CSV yüklendiğinde dosya `data/uploaded_verified_leads.csv` formatına normalize edilir ve aynı backend çalışır:
+
+```text
+run(uploaded_verified_leads.csv) → output/google_sheets_hr_leads.csv → tablo/indirilebilir çıktı
+```
+
 Streamlit arayüzünde jüri/demo kullanımı için şu kontroller vardır:
 
 - `st.session_state` ile üretilen lead tablosu indirme butonlarında kaybolmaz.

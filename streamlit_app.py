@@ -9,11 +9,12 @@ from pathlib import Path
 
 import streamlit as st
 
-from src.growth_ai_ops_prototype import Lead, OUTPUT_DIR, ROOT, enrich_lead, run
+from src.growth_ai_ops_prototype import OUTPUT_DIR, ROOT, run
 
 
 LEADS_CSV = OUTPUT_DIR / "google_sheets_hr_leads.csv"
 XLSX_FILE = OUTPUT_DIR / "konusarak-ogren-hr-outbound-google-sheets.xlsx"
+UPLOADED_VERIFIED_CSV = ROOT / "data" / "uploaded_verified_leads.csv"
 
 COL_COMPANY = "\u015eirket"
 COL_TITLE = "\u00dcnvan"
@@ -52,7 +53,7 @@ st.set_page_config(page_title="Turkiye HR Lead Enrichment", layout="wide")
 
 def read_rows() -> list[dict[str, str]]:
     if not LEADS_CSV.exists():
-        run(None, 100, seed=random.randint(1, 1_000_000))
+        return []
     with LEADS_CSV.open(newline="", encoding="utf-8-sig") as handle:
         return list(csv.DictReader(handle))
 
@@ -101,50 +102,43 @@ def refresh_xlsx() -> None:
             continue
 
 
-def normalize_uploaded_row(row: dict[str, str], index: int) -> Lead:
-    full_name = row.get("Ad Soyad") or row.get("full_name") or row.get("name") or ""
-    company = row.get(COL_COMPANY) or row.get("company") or row.get("Company") or ""
-    title = row.get(COL_TITLE) or row.get("title") or row.get("Title") or ""
-    linkedin_url = row.get("LinkedIn URL") or row.get("linkedin_url") or row.get("linkedin") or ""
-    email = row.get("Email") or row.get("email") or ""
-    source = row.get("source") or row.get("Source") or "Uploaded verified CSV"
-
-    return Lead(
-        lead_id=row.get("lead_id") or f"UPLOAD-{index + 1:03d}",
-        full_name=full_name.strip(),
-        company=company.strip(),
-        title=title.strip(),
-        linkedin_url=linkedin_url.strip(),
-        email=email.strip(),
-        location=(row.get("location") or row.get("Location") or "Turkey").strip(),
-        source=source.strip(),
-    )
-
-
-def sheet_row_from_enriched(row: dict[str, object]) -> dict[str, object]:
-    return {
-        "Ad Soyad": row["full_name"],
-        COL_COMPANY: row["company"],
-        COL_TITLE: row["title"],
-        "LinkedIn URL": row["linkedin_url"],
-        "Email": row["email"],
-        COL_SECTOR: row["company_sector"],
-        COL_SIZE: row["company_size"],
-        "Pain point": row["likely_pain_point"],
-        COL_ENGLISH_NEED: row["estimated_english_need_score"],
-        "Outreach angle": row["outreach_angle"],
-        "LinkedIn DM": row["linkedin_dm"],
-        "Cold email": f"Subject: {row['email_subject']}\n\n{row['email_body']}",
-        "Lead score": row["lead_score"],
-    }
-
-
-def process_uploaded_csv(uploaded_file) -> list[dict[str, object]]:
+def normalize_uploaded_csv(uploaded_file) -> int:
     text = uploaded_file.getvalue().decode("utf-8-sig")
     reader = csv.DictReader(io.StringIO(text))
-    leads = [normalize_uploaded_row(row, index) for index, row in enumerate(reader)]
-    valid_leads = [lead for lead in leads if lead.full_name and lead.company and lead.title]
-    return [sheet_row_from_enriched(enrich_lead(lead)) for lead in valid_leads]
+    UPLOADED_VERIFIED_CSV.parent.mkdir(parents=True, exist_ok=True)
+
+    fieldnames = ["lead_id", "full_name", "company", "title", "linkedin_url", "email", "location", "source"]
+    count = 0
+    with UPLOADED_VERIFIED_CSV.open("w", newline="", encoding="utf-8-sig") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        for index, row in enumerate(reader):
+            full_name = row.get("Ad Soyad") or row.get("full_name") or row.get("name") or ""
+            company = row.get(COL_COMPANY) or row.get("company") or row.get("Company") or ""
+            title = row.get(COL_TITLE) or row.get("title") or row.get("Title") or ""
+            if not (full_name.strip() and company.strip() and title.strip()):
+                continue
+            writer.writerow(
+                {
+                    "lead_id": row.get("lead_id") or f"UPLOAD-{count + 1:03d}",
+                    "full_name": full_name.strip(),
+                    "company": company.strip(),
+                    "title": title.strip(),
+                    "linkedin_url": (row.get("LinkedIn URL") or row.get("linkedin_url") or row.get("linkedin") or "").strip(),
+                    "email": (row.get("Email") or row.get("email") or "").strip(),
+                    "location": (row.get("location") or row.get("Location") or "Turkey").strip(),
+                    "source": (row.get("source") or row.get("Source") or "Uploaded verified CSV").strip(),
+                }
+            )
+            count += 1
+    return count
+
+
+def process_uploaded_csv(uploaded_file) -> list[dict[str, str]]:
+    normalize_uploaded_csv(uploaded_file)
+    run(UPLOADED_VERIFIED_CSV, 100)
+    refresh_xlsx()
+    return read_rows()
 
 
 def generate_demo_leads(count: int, progress_slot, log_slot) -> list[dict[str, str]]:
