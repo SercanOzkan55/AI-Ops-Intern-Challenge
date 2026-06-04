@@ -219,6 +219,47 @@ Lead score'a göre stage atanır:
 | 74-81 | Test sequence | Düşük frekanslı sequence |
 | <74 | Low-touch nurture | İleri tarihli nurture |
 
+## Türkçe Excel / CSV Sütun Ayrışma Sorunu ve Çözümü
+
+Türkçe bölgesel ayarlara sahip Windows bilgisayarlarda, Microsoft Excel varsayılan liste ayracı olarak virgül (`,`) yerine **noktalı virgül (`;`)** bekler. Bu nedenle, standart bir virgül ayracına sahip CSV dosyasını (örneğin `google_sheets_hr_leads.csv`) Excel'de doğrudan çift tıklayarak açtığınızda tüm veriler A sütununa birleşik şekilde gelir.
+
+### Çözüm Yolları:
+1. **Hazır Excel Workbook Dosyasını Açın (Önerilen):** 
+   Ürettiğimiz **`output/konusarak-ogren-hr-outbound-google-sheets.xlsx`** dosyasını doğrudan Excel'de açın. Bu dosya ham bir CSV değil, gerçek bir Excel dosyasıdır. Sütunları ayrıştırılmış, renk kodlu ve düzgün biçimde açılacaktır.
+2. **Excel İçe Aktarma Sihirbazını Kullanın:**
+   Boş bir Excel dosyası açın. **Veri (Data) -> Metinden/CSV'den (From Text/CSV)** yolunu izleyip ilgili CSV dosyasını seçin. Karşınıza gelen pencerede ayırıcı olarak **"Virgül" (Comma)** seçeneğini işaretleyip yükleyin.
+3. **Google Sheets Kullanın:**
+   CSV dosyasını doğrudan Google Drive'a yükleyip Google Sheets ile açtığınızda hiçbir ayar yapmadan otomatik olarak sütunlara ayrılacaktır.
+
+---
+
+## Kullandığımız Teknolojiler ve Otomasyon Mimarisi
+
+Bu projede, B2B Outbound ve Growth Marketing süreçlerini otomatikleştirmek için aşağıdaki teknoloji yığınını ve metodolojiyi kullandık:
+
+### 1. Kullanılan Araçlar ve Teknolojiler:
+* **Python (Core Engine):** Lead toplama veritabanını yöneten, CSV normalize eden, kişi unvanından rol/kıdem analizi yapan, pain point'ler üreten ve lead scoring hesaplayan ana motor.
+* **Node.js (Workbook Builder):** Python'ın ürettiği zenginleştirilmiş CSV verilerini, Excel API'sini kullanarak profesyonel, biçimlendirilmiş ve renk şemalı gerçek bir Excel tablosuna (`.xlsx`) dönüştüren otomasyon katmanı.
+* **Streamlit (Dashboard Arayüzü):** İK verilerini filtrelemek, kişiselleştirilmiş outreach e-posta/DM önizlemelerini görmek ve canlı veritabanını tetiklemek için kullanılan interaktif web paneli.
+* **HTML/JS (Yerel GUI):** Streamlit'e alternatif olarak sunulan, hafif ve hızlı çalışan yerel web arayüzü.
+
+### 2. n8n / Make.com Entegrasyon Mimarisi
+Challenge kapsamında istenen **n8n** veya **Make** gibi low-code otomasyon araçlarına bu sistemi entegre etmek son derece kolaydır. Python kodumuz, bu araçlarda kullanılacak mantıksal karar motorunu (Logic Layer) temsil eder.
+
+**Workflow Blueprint Akışı (`workflows/workflow_blueprint.json`):**
+1. **Trigger (Tetikleyici - LinkedIn/Apollo):** Sales Navigator veya Apollo üzerinden hedef kitle (Türkiye HR departmanları) filtrelenir.
+2. **Data Ingestion Node (Veri Çekme):** n8n/Make üzerinde Google Sheets veya Webhook modülüyle yeni lead verileri içeri alınır.
+3. **Data Cleaning Node (Temizleme):** Python script'i (veya n8n Javascript fonksiyonu) ile boş alanlar normalize edilir, isimler düzeltilir.
+4. **AI Enrichment Node (Yapay Zeka Zenginleştirme):** n8n üzerindeki *OpenAI* veya *Anthropic* modülü tetiklenir. Bizim Python'da yazdığımız akıllı kural motoru, AI'ya gidecek prompt'ları besler (Kişinin sektörü, büyüklüğü ve rolüne göre kişiselleştirilmiş pain point belirler).
+5. **Outreach Copy Generation (Mesaj Üretimi):** Zenginleştirilen verilerle (isim, şirket, pain point ve angle) kişiselleştirilmiş LinkedIn DM ve e-posta kopyaları oluşturulur.
+6. **CRM Routing & Router Node ( CRM & Puanlama):** n8n router modülü lead score'a göre dallanma yapar:
+   * **Score >= 90:** *Hubspot/Airtable* üzerinde "Priority Outreach" aşamasına kaydedilir ve Slack üzerinden Satış Temsilcisine bildirim atılır.
+   * **Score < 90:** "Warm Nurture" aşamasına kaydedilip e-posta sekansına (Lemlist/Instantly) yönlendirilir.
+
+Tüm bu süreç ve bonus olarak hazırlanan ısındırma (warming), e-posta teslim edilebilirliği (SPF/DKIM/DMARC) ve inbox yönetimi yaklaşımları projedeki **[docs/bonus_automation_plan.md](file:///C:/Users/ASUS/Documents/Assignment/docs/bonus_automation_plan.md)** dosyasında ayrıntılı şekilde dokümante edilmiştir.
+
+---
+
 ## Bonus Kapsamı
 
 `docs/bonus_automation_plan.md` içinde şu başlıklar yer alır:
