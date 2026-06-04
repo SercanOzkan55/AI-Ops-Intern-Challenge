@@ -128,6 +128,9 @@ run(uploaded_verified_leads.csv) → output/google_sheets_hr_leads.csv → tablo
 
 Streamlit arayüzünde jüri/demo kullanımı için şu kontroller vardır:
 
+- LinkedIn kaynak asistanı, challenge arama niyetleri için hazır LinkedIn people search linkleri üretir.
+- Dosya yüklemeden gerçek lead CSV satırlarını paste ederek enrichment çalıştırılabilir.
+- Verified CSV template indirilebilir.
 - `st.session_state` ile üretilen lead tablosu indirme butonlarında kaybolmaz.
 - Yeni lead üretiminde spinner, progress bar ve işlem log'u görünür.
 - Sektör, şirket büyüklüğü ve minimum lead score filtreleri vardır.
@@ -136,6 +139,17 @@ Streamlit arayüzünde jüri/demo kullanımı için şu kontroller vardır:
 - Üst metriklerde toplam lead, bulunan e-posta, ortalama İngilizce ihtiyacı, ortalama lead score ve priority outreach görünür.
 - Seçilen lead için LinkedIn DM ve cold email önizleme alanı vardır.
 - Kod içinde hardcoded API key yoktur; production entegrasyonunda secret yönetimi `st.secrets` veya environment variable ile yapılmalıdır.
+
+## LinkedIn Veri Toplama Yaklaşımı
+
+Uygulama LinkedIn login arkasından otomatik scraping yapmaz. Bunun yerine gerçek kişi verisi için güvenli akış şudur:
+
+1. Streamlit'teki LinkedIn kaynak asistanından ilgili arama linkleri açılır.
+2. HR profilleri manuel doğrulanır veya Sales Navigator / Apollo / Clay gibi izinli export kaynaklarından CSV alınır.
+3. `full_name`, `company`, `title`, `linkedin_url`, `email`, `location`, `source` kolonlarıyla CSV yüklenir ya da paste edilir.
+4. Sistem bu gerçek/verifiye datayı cleaning, AI enrichment, outreach generation, lead scoring ve CRM stage akışından geçirir.
+
+Email alanı zorunlu değildir; kaynakta email yoksa boş bırakılır. Sistem kişisel email uydurmaz.
 
 ## Kendi CSV'ini İşleme
 

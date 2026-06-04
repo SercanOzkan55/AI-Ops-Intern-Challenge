@@ -6,6 +6,7 @@ import random
 import subprocess
 import time
 from pathlib import Path
+from urllib.parse import quote_plus
 
 import streamlit as st
 
@@ -47,6 +48,16 @@ WORKFLOW_STEPS = [
     "CRM Status",
 ]
 
+SEARCH_QUERIES = [
+    "HR Manager Turkey",
+    "İnsan Kaynakları Müdürü Türkiye",
+    "Talent Acquisition Turkey",
+    "People & Culture Manager Türkiye",
+    "Learning & Development Manager Turkey",
+]
+
+TEMPLATE_FIELDS = ["lead_id", "full_name", "company", "title", "linkedin_url", "email", "location", "source"]
+
 
 st.set_page_config(page_title="Turkiye HR Lead Enrichment", layout="wide")
 
@@ -77,6 +88,29 @@ def rows_to_csv_bytes(rows: list[dict[str, str]]) -> bytes:
     return buffer.getvalue().encode("utf-8-sig")
 
 
+def template_csv_bytes() -> bytes:
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=TEMPLATE_FIELDS)
+    writer.writeheader()
+    writer.writerow(
+        {
+            "lead_id": "TR-HR-001",
+            "full_name": "Gercek Kisi Adi",
+            "company": "Sirket Adi",
+            "title": "Talent Acquisition Manager",
+            "linkedin_url": "https://www.linkedin.com/in/...",
+            "email": "",
+            "location": "Turkey",
+            "source": "LinkedIn manual verification",
+        }
+    )
+    return buffer.getvalue().encode("utf-8-sig")
+
+
+def linkedin_people_search_url(query: str) -> str:
+    return f"https://www.linkedin.com/search/results/people/?keywords={quote_plus(query)}"
+
+
 def refresh_xlsx() -> None:
     builder = ROOT / "tools" / "build_google_sheets_workbook.mjs"
     if not builder.exists():
@@ -102,15 +136,13 @@ def refresh_xlsx() -> None:
             continue
 
 
-def normalize_uploaded_csv(uploaded_file) -> int:
-    text = uploaded_file.getvalue().decode("utf-8-sig")
+def normalize_csv_text(text: str, default_source: str) -> int:
     reader = csv.DictReader(io.StringIO(text))
     UPLOADED_VERIFIED_CSV.parent.mkdir(parents=True, exist_ok=True)
 
-    fieldnames = ["lead_id", "full_name", "company", "title", "linkedin_url", "email", "location", "source"]
     count = 0
     with UPLOADED_VERIFIED_CSV.open("w", newline="", encoding="utf-8-sig") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer = csv.DictWriter(handle, fieldnames=TEMPLATE_FIELDS)
         writer.writeheader()
         for index, row in enumerate(reader):
             full_name = row.get("Ad Soyad") or row.get("full_name") or row.get("name") or ""
@@ -127,15 +159,27 @@ def normalize_uploaded_csv(uploaded_file) -> int:
                     "linkedin_url": (row.get("LinkedIn URL") or row.get("linkedin_url") or row.get("linkedin") or "").strip(),
                     "email": (row.get("Email") or row.get("email") or "").strip(),
                     "location": (row.get("location") or row.get("Location") or "Turkey").strip(),
-                    "source": (row.get("source") or row.get("Source") or "Uploaded verified CSV").strip(),
+                    "source": (row.get("source") or row.get("Source") or default_source).strip(),
                 }
             )
             count += 1
     return count
 
 
+def normalize_uploaded_csv(uploaded_file) -> int:
+    text = uploaded_file.getvalue().decode("utf-8-sig")
+    return normalize_csv_text(text, "Uploaded verified CSV")
+
+
 def process_uploaded_csv(uploaded_file) -> list[dict[str, str]]:
     normalize_uploaded_csv(uploaded_file)
+    run(UPLOADED_VERIFIED_CSV, 100)
+    refresh_xlsx()
+    return read_rows()
+
+
+def process_pasted_csv(text: str) -> list[dict[str, str]]:
+    normalize_csv_text(text, "Pasted verified CSV")
     run(UPLOADED_VERIFIED_CSV, 100)
     refresh_xlsx()
     return read_rows()
@@ -216,8 +260,26 @@ with st.sidebar:
         `Ad Soyad`, `Şirket`, `Ünvan`, `LinkedIn URL`, `Email`
         """
     )
+    st.subheader("LinkedIn kaynak asistanı")
+    st.caption("Login arkasından scraping yapmaz; manuel doğrulanmış profil listesini hızlı hazırlatır.")
+    for query in SEARCH_QUERIES:
+        st.link_button(query, linkedin_people_search_url(query), use_container_width=True)
+    st.download_button(
+        "Verified CSV template indir",
+        data=template_csv_bytes(),
+        file_name="verified_leads_template.csv",
+        mime="text/csv",
+        use_container_width=True,
+    )
+
     uploaded_file = st.file_uploader("Verified HR lead CSV yükle", type=["csv"])
     process_upload = st.button("CSV'yi Enrich Et", type="primary", use_container_width=True)
+    pasted_csv = st.text_area(
+        "CSV yapıştır",
+        height=160,
+        placeholder="lead_id,full_name,company,title,linkedin_url,email,location,source\nTR-HR-001,...",
+    )
+    process_paste = st.button("Yapıştırılan CSV'yi Enrich Et", use_container_width=True)
 
     st.divider()
     st.subheader("Demo fallback")
@@ -238,6 +300,18 @@ if process_upload:
             st.session_state.rows = process_uploaded_csv(uploaded_file)
             st.session_state.data_mode = "Verified CSV"
         st.success(f"{len(st.session_state.rows)} gerçek/verifiye lead enrich edildi.")
+
+if process_paste:
+    if not pasted_csv.strip():
+        st.error("Önce gerçek/verifiye lead satırlarını CSV formatında yapıştırmalısın.")
+    else:
+        with st.spinner("Yapıştırılan gerçek lead CSV enrich ediliyor..."):
+            st.session_state.rows = process_pasted_csv(pasted_csv)
+            st.session_state.data_mode = "Pasted verified CSV"
+        if st.session_state.rows:
+            st.success(f"{len(st.session_state.rows)} gerçek/verifiye lead enrich edildi.")
+        else:
+            st.error("CSV okundu ama valid satır bulunamadı. full_name, company ve title alanları dolu olmalı.")
 
 if demo_clicked:
     progress_slot = st.empty()
