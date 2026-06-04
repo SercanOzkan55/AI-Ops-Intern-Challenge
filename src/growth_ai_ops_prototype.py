@@ -209,7 +209,10 @@ def build_demo_leads(limit: int = 100, seed: int | None = None) -> list[Lead]:
 
 
 def build_real_leads() -> list[Lead]:
-    from real_hr_leads import generate_real_leads
+    try:
+        from src.real_hr_leads import generate_real_leads
+    except ImportError:
+        from real_hr_leads import generate_real_leads
     real = generate_real_leads()
     return [
         Lead(
