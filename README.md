@@ -15,6 +15,8 @@ Amaç: gerçek/verifiye 100 HR lead'ini içe almak, lead'leri zenginleştirmek, 
 
 | Dosya | Açıklama |
 |---|---|
+| `100_gercek_hr_lead_ham.csv` | **(Kolay Erişim)** 100 gerçek Türkiye HR liderinin doğrulanmış kaynaklarıyla ham verisi |
+| `100_gercek_hr_lead_zenginlestirilmis.csv` | **(Kolay Erişim)** 100 lead'in acı noktaları, outreach açıları, puanları ve CRM aşamalarını içeren nihai Google Sheets / CSV tablosu |
 | `src/growth_ai_ops_prototype.py` | Lead üretimi, enrichment, outreach generation ve CRM pipeline motoru |
 | `src/gui_app.py` | Lokal web arayüzü |
 | `data/raw_hr_leads_sample.csv` | Pipeline çalışınca oluşan normalize ham lead çıktısı |
