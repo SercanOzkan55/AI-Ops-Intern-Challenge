@@ -326,166 +326,111 @@ def crm_stage(score: int) -> str:
 
 def generate_linkedin_dm(lead: Lead, profile: dict[str, object], pain_point: str, angle: str) -> str:
     first_name = lead.full_name.split()[0]
-    lead_persona = persona(lead.title)
     
     try:
-        num = int("".join(filter(str.isdigit, lead.lead_id)))
-        variant = "B" if num % 2 == 0 else "A"
+        seed = int("".join(filter(str.isdigit, lead.lead_id)))
     except Exception:
-        variant = "A"
+        seed = len(lead.full_name)
         
-    if lead_persona == "recruitment_growth":
-        if variant == "A":
-            return f"Merhaba {first_name}, {lead.company} recruitment ekibinde İngilizce mülakat süreçlerini otomatikleştiren, '{angle}' üzerine 5 dakikalık bir test sunuyoruz. İncelemek isterseniz 10 dk konuşabiliriz."
-        else:
-            return f"Selam {first_name}, {lead.company} olarak global rollerdeki adayların İngilizce akıcılığını ölçerken karşılaşılan zorlukları biliyoruz. '{angle}' üzerine kısa bir fikir alışverişi yapmak isterim."
-            
-    elif lead_persona == "learning_owner":
-        if variant == "A":
-            return f"Merhaba {first_name}, {lead.company} L&D süreçlerinde katılımı artıracak konuşma odaklı İngilizce eğitimi tasarlıyoruz. Gündeminizde '{pain_point}' varsa kısa bir görüşme planlayabiliriz."
-        else:
-            return f"Selam {first_name}, {lead.company} çalışanlarına özel ölçeklenebilir dil gelişim yan hakkı sunan '{angle}' modelimizi 2 haftalık ücretsiz denemeyle test etmek ister misiniz?"
-            
-    elif lead_persona == "employee_experience":
-        if variant == "A":
-            return f"Merhaba {first_name}, çalışan bağlılığını artırmak için {lead.company} ekibine esnek konuşma pratiği faydası sunuyoruz. '{angle}' kurgumuzu incelemek ister misiniz?"
-        else:
-            return f"Selam {first_name}, çalışan memnuniyetini doğrudan artıran yan haklar kapsamında tasarladığımız konuşma koçu programını 2 haftalık ücretsiz pilotla test edebiliriz. Detaylar için uygun musunuz?"
-            
-    elif lead_persona == "business_partner":
-        if variant == "A":
-            return f"Merhaba {first_name}, sorumlu olduğunuz departmanlarda yaşanan '{pain_point}' konusuna yönelik, özel olarak tasarlanmış '{angle}' pratik sınıfları kurguluyoruz. Bağlantıda kalmak isterim."
-        else:
-            return f"Selam {first_name}, iş birimlerindeki dil bariyerlerini en aza indirmek ve operasyonel verimliliği artırmak adına kurguladığımız '{angle}' modelini bu hafta konuşabiliriz."
-            
-    else: # hr_leadership
-        if variant == "A":
-            return f"Merhaba {first_name}, {lead.company} için organizasyonel İngilizce gelişimini standardize edecek '{angle}' üzerine 2 haftalık risk taşımayan ücretsiz bir pilot hazırladık. İncelemek ister misiniz?"
-        else:
-            return f"Selam {first_name}, {lead.company} genelinde dil engellerini aşarak iş verimliliğini artıran konuşma pratiği modelimizi ve başarı hikayelerimizi aktarmak için 10 dk ayırabilir misiniz?"
+    greetings = [
+        f"Merhaba {first_name},",
+        f"Selamlar {first_name},",
+        f"Selam {first_name},"
+    ]
+    greeting = greetings[seed % len(greetings)]
+    
+    hooks = [
+        f"{lead.company} bünyesindeki {lead.title} rolünüzü gördüm.",
+        f"{lead.company} ekibindeki çalışmalarınızı takip ediyorum.",
+        f"{lead.company} İK ekibindeki profilinizi inceleme fırsatım oldu."
+    ]
+    hook = hooks[(seed + 1) % len(hooks)]
+    
+    pitches = [
+        f"Gündeminizde '{pain_point}' varsa,",
+        f"Ekiplerde yaşanan '{pain_point}' konusuna yönelik,",
+        f"Dil engellerini aşarak iş verimliliğini artıran"
+    ]
+    pitch = pitches[(seed + 2) % len(pitches)]
+    
+    values = [
+        f"'{angle}' modelimiz üzerine 10 dk konuşmak isterim.",
+        f"kurguladığımız '{angle}' deneme programını aktarmak isterim.",
+        f"geliştirdiğimiz '{angle}' projesini paylaşmak isterim."
+    ]
+    value = values[(seed + 3) % len(values)]
+    
+    ctas = [
+        "Bağlantıda kalmak isterim.",
+        "Kısa bir görüşme için uygun musunuz?",
+        "Detaylar için bu hafta zamanınız var mı?"
+    ]
+    cta = ctas[(seed + 4) % len(ctas)]
+    
+    return f"{greeting} {hook} {pitch} {value} {cta}"
 
 
 def generate_email(lead: Lead, profile: dict[str, object], pain_point: str, angle: str) -> tuple[str, str]:
     first_name = lead.full_name.split()[0]
-    lead_persona = persona(lead.title)
     
     try:
-        num = int("".join(filter(str.isdigit, lead.lead_id)))
-        variant = "B" if num % 2 == 0 else "A"
+        seed = int("".join(filter(str.isdigit, lead.lead_id)))
     except Exception:
-        variant = "A"
+        seed = len(lead.full_name)
         
-    if lead_persona == "recruitment_growth":
-        if variant == "A":
-            subject = f"{lead.company} adayları için İngilizce değerlendirme otomasyonu"
-            body = (
-                f"Merhaba {first_name},\n\n"
-                f"{lead.company} bünyesindeki işe alım süreçlerinde adayların İngilizce seviyelerini ölçmek "
-                f"zaman alıcı olabiliyor. Özellikle {profile['sector']} rollerinde bu süreci hızlandırmak kritik.\n\n"
-                f"Konusarak Ogren ile adayların konuşma becerilerini 5 dakikalık yapay zeka destekli bir testle ölçüyoruz. "
-                f"Ekipleriniz için '{angle}' odaklı küçük bir test segmenti kurgulamak isterseniz "
-                f"bu hafta 10 dakika görüşebiliriz.\n\n"
-                f"Sevgiler,\nGrowth Automation Ekibi"
-            )
-        else:
-            subject = f"{lead.company} - Global işe alım ve İngilizce bariyeri"
-            body = (
-                f"Merhaba {first_name},\n\n"
-                f"{lead.company} olarak global yetenekleri bünyenize katarken İngilizce yeterliliğini değerlendirmek "
-                f"önemli bir odak noktası haline geldi. Gündeminizdeki temel konulardan biri: {pain_point}.\n\n"
-                f"Buna yönelik geliştirdiğimiz '{angle}' modelini 2 haftalık ücretsiz bir pilot programla denemek ister misiniz? "
-                f"Detaylar uygunsa kısa bir görüşme planlayabiliriz.\n\n"
-                f"Sevgiler,\nGrowth Automation Ekibi"
-            )
-            
-    elif lead_persona == "learning_owner":
-        if variant == "A":
-            subject = f"{lead.company} L&D: Konuşma odaklı İngilizce gelişiminde ROI"
-            body = (
-                f"Merhaba {first_name},\n\n"
-                f"Geleneksel kurumsal İngilizce eğitimlerinde katılım ve tamamlanma oranları genellikle düşük kalıyor. "
-                f"L&D lideri olarak hedefinizin '{pain_point}' olduğunu tahmin ediyorum.\n\n"
-                f"Konusarak Ogren olarak geliştirdiğimiz birebir konuşma pratiği modeliyle katılım oranlarını %85'in üzerine çıkarıyoruz. "
-                f"{lead.company} ekipleri için '{angle}' üzerine konuşmak için önümüzdeki hafta uygun musunuz?\n\n"
-                f"Sevgiler,\nGrowth Automation Ekibi"
-            )
-        else:
-            subject = f"{lead.company} çalışanları için kişiselleştirilmiş İngilizce programı"
-            body = (
-                f"Merhaba {first_name},\n\n"
-                f"L&D bütçelerini yönetirken tüm organizasyona ölçeklenebilir ve kişiselleştirilmiş bir gelişim sunmak "
-                f"büyük bir zorluk. Özellikle {profile['sector']} tarafında {profile['growth_signal']} gündemdeyken.\n\n"
-                f"İlgi çeken '{angle}' yaklaşımımızla çalışanların kendi seviyelerine özel konuşma koçu atıyoruz. "
-                f"Kısa bir demo paylaşmamı ister misiniz?\n\n"
-                f"Sevgiler,\nGrowth Automation Ekibi"
-            )
-            
-    elif lead_persona == "employee_experience":
-        if variant == "A":
-            subject = f"{lead.company} çalışan deneyimi: İngilizce gelişim yan hakkı"
-            body = (
-                f"Merhaba {first_name},\n\n"
-                f"Son dönemde çalışan bağlılığını artırmak için en çok tercih edilen yan haklardan biri yabancı dil gelişimi. "
-                f"{lead.company} ekiplerinde de bu deneyimi iyileştirmek istediğinizi biliyoruz.\n\n"
-                f"Esnek ders saatleriyle çalışanların severek kullanacağı '{angle}' modelini tasarladık. "
-                f"Çalışan memnuniyetine etkisi üzerine konuşmak isterseniz 10 dakika zamanınızı rica edebilir miyim?\n\n"
-                f"Sevgiler,\nGrowth Automation Ekibi"
-            )
-        else:
-            subject = f"{lead.company} çalışan bağlılığı ve kişisel gelişim fırsatları"
-            body = (
-                f"Merhaba {first_name},\n\n"
-                f"Şirket içi yetenekleri elde tutmak ve kariyer yollarını desteklemek, güçlü bir çalışan deneyiminden geçiyor. "
-                f"Bu noktada en çok karşılaşılan zorluk: {pain_point}.\n\n"
-                f"Konusarak Ogren ile sunduğumuz '{angle}' kurgusunu ve örnek başarı hikayelerini "
-                f"paylaşmak isterim. Bu hafta kısa bir telefon görüşmesi yapabilir miyiz?\n\n"
-                f"Sevgiler,\nGrowth Automation Ekibi"
-            )
-            
-    elif lead_persona == "business_partner":
-        if variant == "A":
-            subject = f"{lead.company} departman bazlı İngilizce yeterlilik haritası"
-            body = (
-                f"Merhaba {first_name},\n\n"
-                f"İlgili iş birimlerinin (teknoloji, satış, destek) İngilizce ihtiyaçları birbirinden oldukça farklı. "
-                f"Bir HRBP olarak '{pain_point}' konusunun gündeminizde olduğunu öngörüyoruz.\n\n"
-                f"Konusarak Ogren ile departmanların rollerine özel tasarlanmış '{angle}' konuşma sınıfları kuruyoruz. "
-                f"Ekiplerinize nasıl değer katabileceğimizi konuşabiliriz.\n\n"
-                f"Sevgiler,\nGrowth Automation Ekibi"
-            )
-        else:
-            subject = f"{lead.company} ekiplerinde İngilizce iletişim verimliliği"
-            body = (
-                f"Merhaba {first_name},\n\n"
-                f"Sorumlu olduğunuz departmanlarda global ekiplerle veya yabancı müşterilerle iletişimde yaşanan aksamalar, "
-                f"operasyonel verimliliği doğrudan etkiliyor olabilir.\n\n"
-                f"Buna çözüm olarak geliştirdiğimiz '{angle}' odaklı konuşma modüllerini ve "
-                f"2 haftalık ücretsiz deneme sürecimizi planlamak için bu hafta uygun musunuz?\n\n"
-                f"Sevgiler,\nGrowth Automation Ekibi"
-            )
-            
-    else: # hr_leadership
-        if variant == "A":
-            subject = f"{lead.company} için 2 haftalık İngilizce gelişim pilotu"
-            body = (
-                f"Merhaba {first_name},\n\n"
-                f"{lead.company} liderlik ekibinde {lead.title} olarak, organizasyon genelinde "
-                f"İngilizce seviyesini standardize etmek ve bunu ölçülebilir kılmak istediğinizi tahmin ediyorum.\n\n"
-                f"Bu kapsamda '{angle}' odaklı, risk barındırmayan 2 haftalık kurumsal bir pilot program kurguluyoruz. "
-                f"İlginizi çekerse detayları konuşmak üzere kısa bir kahve sohbeti planlayabiliriz.\n\n"
-                f"Sevgiler,\nGrowth Automation Ekibi"
-            )
-        else:
-            subject = f"{lead.company} organizasyonel İngilizce gelişim standardı"
-            body = (
-                f"Merhaba {first_name},\n\n"
-                f"{lead.company} bünyesinde {profile['sector']} ölçeğinde büyürken, en sık karşılaşılan "
-                f"operasyonel engellerden biri dil bariyerleri olabiliyor. Özellikle: {pain_point}.\n\n"
-                f"Geliştirdiğimiz '{angle}' modeliyle şirket genelinde konuşma odaklı gelişimi nasıl hızlandırdığımızı "
-                f"aktarmak isterim. Önümüzdeki günlerde 10 dakika ayırmanız mümkün mü?\n\n"
-                f"Sevgiler,\nGrowth Automation Ekibi"
-            )
-            
+    subject_options = [
+        f"{lead.company} ekipleri için konuşma odaklı İngilizce pilotu",
+        f"{lead.company} çalışan gelişiminde İngilizce pratik modeli",
+        f"{lead.company} ve Konuşarak Öğren: Kurumsal İngilizce İş Birliği",
+        f"{lead.company} ekiplerinde dil bariyerini aşma kurgusu",
+        f"{lead.company} için 2 haftalık İngilizce gelişim denemesi",
+        f"{lead.company} L&D / İK süreçlerinde İngilizce standardizasyonu"
+    ]
+    subject = subject_options[seed % len(subject_options)]
+    
+    greetings = [
+        f"Merhaba {first_name},",
+        f"Selamlar {first_name},",
+        f"Değerli {first_name},"
+    ]
+    greeting = greetings[(seed + 1) % len(greetings)]
+    
+    hooks = [
+        f"{lead.company} bünyesindeki {lead.title} pozisyonunuzu ve ekibinizin büyüme adımlarını yakından takip ediyorum.",
+        f"{lead.company} tarafındaki İK süreçlerinizi ve {profile['sector']} alanındaki sektörel başarılarınızı uzun süredir izliyorum.",
+        f"{lead.title} olarak {lead.company} ekibinde yürüttüğünüz çalışan gelişimi çalışmalarını inceleme fırsatım oldu."
+    ]
+    hook = hooks[(seed + 2) % len(hooks)]
+    
+    pitches = [
+        f"Özellikle {profile['sector']} alanında faaliyet gösteren firmalarda karşılaştığımız en yaygın konu: {pain_point}.",
+        f"Şirketinizin {profile['growth_signal']} odağı varken, çalışanların dil becerilerini geliştirmek ({pain_point}) kritik bir gündem maddesi olmalı.",
+        f"Sizin gibi büyüyen organizasyonlarda İK departmanlarının en çok odaklandığı konulardan biri olan '{pain_point}' üzerine yenilikçi bir çözüm geliştirdik."
+    ]
+    pitch = pitches[(seed + 3) % len(pitches)]
+    
+    values = [
+        f"Konusarak Ogren ile sunduğumuz '{angle}' kurgusunu ve örnek başarı hikayelerini sizinle paylaşmak isterim.",
+        f"Ekiplerinize özel tasarlayacağımız '{angle}' modelini 2 haftalık ücretsiz bir deneme süreciyle test etmeye ne dersiniz?",
+        f"Bu yapıda geliştirdiğimiz '{angle}' yaklaşımıyla, çalışanların seviyelerine göre 1-on-1 konuşma koçları atıyoruz."
+    ]
+    value = values[(seed + 4) % len(values)]
+    
+    ctas = [
+        "Önümüzdeki günlerde bu konuyu değerlendirmek adına 10 dakikalık kısa bir telefon görüşmesi yapabilir miyiz?",
+        f"Uygunsa bu hafta '{angle}' kurgusunun {lead.company} için nasıl bir fayda sağlayacağını konuşmak üzere kısa bir kahve sohbeti ayarlayabiliriz.",
+        "Sürecin nasıl çalıştığını gösteren kısa bir demo paylaşmamı veya 15 dakikalık bir fikir alışverişi planlamamızı ister misiniz?"
+    ]
+    cta = ctas[(seed + 5) % len(ctas)]
+    
+    signoffs = [
+        "Sevgiler,\nGrowth Automation Ekibi",
+        "İyi çalışmalar dilerim,\nGrowth Automation Ekibi",
+        "Saygılarımla,\nGrowth Automation Ekibi"
+    ]
+    signoff = signoffs[(seed + 6) % len(signoffs)]
+    
+    body = f"{greeting}\n\n{hook}\n\n{pitch}\n\n{value} {cta}\n\n{signoff}"
     return subject, body
 
 
