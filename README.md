@@ -8,7 +8,7 @@ Amaç: gerçek/verifiye 100 HR lead'ini içe almak, lead'leri zenginleştirmek, 
 
 - Lokal GUI: `python src/gui_app.py`
 - Lokal adres: `http://127.0.0.1:8765`
-- Streamlit Cloud app: `streamlit_app.py`
+- Canlı Streamlit Cloud Uygulaması: [ai-ops-intern-challenge.streamlit.app](https://ai-ops-intern-challenge-24zhb9hk496ij7aue2ghjx.streamlit.app)
 - GitHub Pages statik demo: `https://sercanozkan55.github.io/AI-Ops-Intern-Challenge/`
 
 ## Teslim Özeti
