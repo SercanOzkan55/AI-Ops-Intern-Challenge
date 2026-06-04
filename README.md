@@ -28,18 +28,34 @@ Amaç: gerçek/verifiye 100 HR lead'ini içe almak, lead'leri zenginleştirmek, 
 | `docs/index.html` | GitHub Pages statik demo sayfası |
 | `docs/bonus_automation_plan.md` | Bonus otomasyon yaklaşımı |
 
-## Nasıl Çalışır?
+## Nasıl Çalışır ve Sistem Mimarisi
 
-Sistem şu akışı takip eder:
+Outbound büyüme otomasyonu sistemimiz, ham verinin içeri alınmasından (ingestion) CRM yönlendirmesine kadar olan adımları uçtan uca otomatikleştirir.
 
-```text
-LinkedIn Search
-→ Google Sheets
-→ Cleaning
-→ AI Enrichment
-→ Outreach Generation
-→ CRM Status
+### İş Akışı Şeması (Workflow Diagram)
+
+```mermaid
+graph TD
+    A[LinkedIn/Apollo Listesi] -->|Manuel / CSV Export| B(verified_leads.csv İçe Alımı)
+    B --> C{Veri Temizleme & Normalizasyon}
+    C -->|İsim ve Unvan Düzeltme| D[AI Enrichment Katmanı]
+    D -->|Persona ve Kıdem Tespiti| E[Acı Noktası ve İletişim Açısı Analizi]
+    E --> F[Lead Scoring Puanlama Motoru]
+    F -->|Sektör & Kıdem Ağırlıklandırması| G{CRM Router Dallanması}
+    G -->|Skor >= 90| H[Priority Outreach / Slack / Hubspot]
+    G -->|Skor 82-89| I[Warm Nurture / Sekans / Instantly]
+    G -->|Skor < 82| J[Test / Low-Touch Nurture]
+    H --> K[Kişiselleştirilmiş A/B Mesaj Üretimi]
+    I --> K
+    J --> K
+    K --> L[XLSX Raporu ve CSV Çıktıları]
 ```
+
+### Arayüz Ekran Görüntüsü
+
+Aşağıda, gerçek İK lead'lerini zenginleştirdiğimiz Streamlit Cloud arayüzünün görünümü yer almaktadır:
+
+![Streamlit Arayüzü](docs/assets/streamlit_screenshot.png)
 
 Bu prototip doğrudan LinkedIn scraping yapmaz ve kişisel email uydurmaz. Challenge metnindeki "varsa email" beklentisine uygun şekilde email bulunmuyorsa boş bırakılır. Gerçek kullanımda LinkedIn Sales Navigator, Apollo, Clay veya manuel doğrulanmış CSV export sisteme input olarak verilebilir.
 
