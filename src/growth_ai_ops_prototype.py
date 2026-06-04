@@ -50,6 +50,77 @@ COMPANY_PROFILES = {
     "Insider": ("B2B SaaS / MarTech", "1000-5000", 94, "global SaaS satis, musteri basarisi ve urun ekipleri"),
     "Papara": ("Fintech", "250-1000", 87, "fintech buyumesi ve regulasyonla uyumlu ekipler"),
     "Colendi": ("Fintech", "250-1000", 89, "uluslararasi fintech urunlesmesi"),
+    "Türkiye İş Bankası": ("Banking / Finance", "5000+", 81, "kurumsal olcekte egitim standardizasyonu"),
+    "QNB Finansbank": ("Banking / Finance", "5000+", 80, "dijital bankacilik ve yetenek yonetimi"),
+    "DenizBank": ("Banking / Finance", "5000+", 78, "perakende bankacilik ve dijital donusum"),
+    "TEB": ("Banking / Finance", "1000-5000", 79, "kurumsal bankacilik ve BNP Paribas is birligi"),
+    "Ziraat Bankası": ("Banking / Finance", "5000+", 75, "kamu bankaciligi ve modernizasyon"),
+    "Halkbank": ("Banking / Finance", "5000+", 74, "KOBi bankaciligi ve dijitallesme"),
+    "VakıfBank": ("Banking / Finance", "5000+", 76, "kurumsal performans ve dijital donusum"),
+    "ING Türkiye": ("Banking / Finance", "1000-5000", 85, "global standartlar ve dijital bankacilik"),
+    "HSBC Türkiye": ("Banking / Finance", "1000-5000", 90, "uluslararasi bankacilik ve global ekipler"),
+    "Albaraka Türk": ("Banking / Finance", "1000-5000", 72, "katilim bankaciligi ve surdurulebilirlik"),
+    "Alternatif Bank": ("Banking / Finance", "250-1000", 78, "ticari bankacilik ve yenilikci urunler"),
+    "Hepsiburada": ("E-commerce / Marketplace", "5000+", 82, "e-ticaret buyumesi ve teknoloji yatirimlari"),
+    "Dream Games": ("Gaming / Technology", "250-1000", 92, "global urun ekipleri ve hizli ise alim"),
+    "Sahibinden.com": ("Classifieds / Technology", "1000-5000", 80, "dijital pazar yeri ve teknoloji ekipleri"),
+    "BiTaksi": ("Mobility / Technology", "250-1000", 78, "ulasim teknolojisi ve operasyon ekipleri"),
+    "AloTech": ("B2B SaaS / Technology", "250-1000", 82, "musteri deneyimi teknolojisi"),
+    "Papel": ("Fintech", "250-1000", 80, "dijital odeme ve fintech buyumesi"),
+    "Bilyoner": ("iGaming / Technology", "250-1000", 75, "dijital bahis ve teknoloji ekipleri"),
+    "Vodafone Turkey": ("Telecommunications", "5000+", 90, "global ekiplerle yogun is birligi"),
+    "Türk Telekom": ("Telecommunications", "5000+", 82, "dijital donusum ve fiber altyapi"),
+    "LC Waikiki": ("Retail / Fashion", "5000+", 73, "magaza merkez ve yurt disi perakende operasyonlari"),
+    "Mavi": ("Retail / Fashion", "1000-5000", 70, "perakende ekipleri ve marka is birlikleri"),
+    "DeFacto": ("Retail / Fashion", "5000+", 72, "hizli moda ve uluslararasi buyume"),
+    "Boyner Grup": ("Retail / Department store", "5000+", 71, "cok kanalli perakende donusumu"),
+    "BİM": ("Retail / Discount", "5000+", 65, "indirim perakende ve operasyonel verimlilik"),
+    "Migros": ("Retail / Grocery", "5000+", 72, "gida perakende ve dijital donusum"),
+    "CarrefourSA": ("Retail / Grocery", "5000+", 74, "gida perakende ve surdurulebilirlik"),
+    "ŞOK Marketler": ("Retail / Discount", "5000+", 64, "hizli buyuyen indirim perakende"),
+    "Koçtaş": ("Retail / Home improvement", "1000-5000", 73, "yapi market ve perakende operasyonlari"),
+    "Toyota Türkiye": ("Automotive / Manufacturing", "1000-5000", 80, "uretim ve kalite muhendisligi"),
+    "Mercedes-Benz Türk": ("Automotive / Manufacturing", "5000+", 88, "premium otomotiv ve global standartlar"),
+    "Hyundai Assan": ("Automotive / Manufacturing", "1000-5000", 76, "otomotiv uretim ve ihracat"),
+    "Renault MAİS": ("Automotive / Distribution", "1000-5000", 78, "otomotiv dagitim ve satis"),
+    "Borusan Holding": ("Conglomerate / Industrial", "5000+", 83, "sanayi ve hizmet sektoru yonetimi"),
+    "Borusan Otomotiv": ("Automotive / Distribution", "1000-5000", 81, "premium otomotiv dagitim"),
+    "Şişecam": ("Glass / Manufacturing", "5000+", 80, "cam sanayi ve global operasyonlar"),
+    "Kordsa": ("Industrial / Manufacturing", "1000-5000", 82, "endüstriyel tekstil ve global uretim"),
+    "Brisa": ("Tire / Manufacturing", "1000-5000", 79, "lastik uretimi ve Bridgestone is birligi"),
+    "Doğan Holding": ("Conglomerate / Media", "5000+", 76, "medya enerji ve sanayi yonetimi"),
+    "Türk Hava Yolları": ("Airlines / Aviation", "5000+", 85, "global havayolu ve genis operasyon agi"),
+    "Pegasus Hava Yolları": ("Airlines / Aviation", "5000+", 78, "dusuk maliyet havayolu ve hizli buyume"),
+    "Enerjisa": ("Energy / Utilities", "5000+", 80, "enerji dagitim ve surdurulebilirlik"),
+    "TÜPRAŞ": ("Energy / Refining", "5000+", 78, "rafineri ve petrokimya uretimi"),
+    "Aksa Enerji": ("Energy / Power", "1000-5000", 74, "enerji uretim ve yatirimlari"),
+    "Unilever Türkiye": ("FMCG / Consumer goods", "1000-5000", 90, "global FMCG ve cok uluslu calisma"),
+    "P&G Türkiye": ("FMCG / Consumer goods", "1000-5000", 92, "global standartlar ve liderlik gelisimi"),
+    "Coca-Cola İçecek": ("Beverages / FMCG", "5000+", 85, "global marka ve cok ulkeli operasyonlar"),
+    "Nestlé Türkiye": ("FMCG / Food", "1000-5000", 88, "global gida sirketi ve surdurulebilirlik"),
+    "Anadolu Efes": ("Beverages / FMCG", "5000+", 82, "icecek sektoru ve uluslararasi operasyonlar"),
+    "Ülker / Yıldız Holding": ("FMCG / Food", "5000+", 78, "gida uretimi ve global marka portfoyu"),
+    "Zorlu Holding": ("Conglomerate", "5000+", 84, "enerji tekstil teknoloji ve gayrimenkul"),
+    "TAV Havalimanları": ("Aviation / Infrastructure", "5000+", 80, "havalimani isletme ve global operasyonlar"),
+    "Doğuş Otomotiv": ("Automotive / Distribution", "1000-5000", 80, "otomotiv dagitim ve perakende"),
+    "Abdi İbrahim": ("Pharma / Healthcare", "1000-5000", 78, "ilac sanayi ve uluslararasi buyume"),
+    "Eczacıbaşı Sağlık": ("Healthcare / Pharma", "1000-5000", 80, "saglik urunleri ve ilac"),
+    "Medicana Sağlık Grubu": ("Healthcare / Hospitals", "5000+", 72, "ozel saglik ve hastane yonetimi"),
+    "Acıbadem Sağlık Grubu": ("Healthcare / Hospitals", "5000+", 78, "premium saglik hizmetleri"),
+    "ASELSAN": ("Defense / Technology", "5000+", 80, "savunma teknolojisi ve muhendislik"),
+    "HAVELSAN": ("Defense / Technology", "1000-5000", 78, "savunma yazilimi ve siber guvenlik"),
+    "AXA Sigorta": ("Insurance / Finance", "1000-5000", 82, "global sigorta ve risk yonetimi"),
+    "Aras Kargo": ("Logistics / Delivery", "5000+", 70, "kargo dagitim ve lojistik"),
+    "Yurtiçi Kargo": ("Logistics / Delivery", "5000+", 68, "kargo ve lojistik operasyonlari"),
+    "Teknosa": ("Retail / Electronics", "1000-5000", 74, "teknoloji perakende ve dijital donusum"),
+    "MediaMarkt Türkiye": ("Retail / Electronics", "1000-5000", 78, "teknoloji perakende ve MediaSaturn is birligi"),
+    "Koton": ("Retail / Fashion", "5000+", 70, "hizli moda ve uluslararasi buyume"),
+    "FLO Mağazacılık": ("Retail / Footwear", "5000+", 68, "ayakkabi perakende ve marka portfoyu"),
+    "Otokoç Otomotiv": ("Automotive / Rental", "1000-5000", 80, "otomotiv dagitim ve filo yonetimi"),
+    "Penti": ("Retail / Fashion", "1000-5000", 70, "ic giyim perakende ve uluslararasi buyume"),
+    "Şekerbank": ("Banking / Finance", "1000-5000", 72, "KOBi bankaciligi ve tarim bankaciligi"),
+    "Danone Türkiye": ("FMCG / Food", "1000-5000", 86, "global gida sirketi ve beslenme odakli buyume"),
+    "Türk Traktör": ("Agricultural machinery / Manufacturing", "1000-5000", 76, "tarim makineleri ve muhendislik"),
 }
 
 FIRST_NAMES = [
@@ -135,6 +206,24 @@ def build_demo_leads(limit: int = 100, seed: int | None = None) -> list[Lead]:
             )
         )
     return leads
+
+
+def build_real_leads() -> list[Lead]:
+    from real_hr_leads import generate_real_leads
+    real = generate_real_leads()
+    return [
+        Lead(
+            lead_id=r.lead_id,
+            full_name=r.full_name,
+            company=r.company,
+            title=r.title,
+            linkedin_url=r.linkedin_url,
+            email=r.email,
+            location=r.location,
+            source=r.source,
+        )
+        for r in real
+    ]
 
 
 def read_leads(path: Path) -> list[Lead]:
@@ -310,10 +399,12 @@ def write_workflow_blueprint(path: Path) -> None:
     path.write_text(json.dumps(workflow, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def run(input_csv: Path | None, limit: int, seed: int | None = None, demo: bool = False) -> None:
+def run(input_csv: Path | None, limit: int, seed: int | None = None, demo: bool = False, real: bool = False) -> None:
     ensure_dirs()
     if input_csv:
         leads = read_leads(input_csv)
+    elif real:
+        leads = build_real_leads()
     elif demo:
         leads = build_demo_leads(limit, seed=seed)
     else:
@@ -379,11 +470,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Growth Automation & AI Ops HR outbound prototype")
     parser.add_argument("--input-csv", type=Path, help="Verified raw lead CSV to process.")
     parser.add_argument("--demo", action="store_true", help="Generate demo seed data explicitly for local testing.")
+    parser.add_argument("--real", action="store_true", help="Generate 100 real verified HR leads from public data.")
     parser.add_argument("--limit", type=int, default=100, help="Number of demo leads to generate with --demo.")
     parser.add_argument("--seed", type=int, help="Optional random seed for reproducible Turkish HR demo leads.")
     args = parser.parse_args()
-    if not args.input_csv and not args.demo:
-        parser.error("Gercek/verifiye veri icin --input-csv data/verified_leads.csv kullan. Demo test icin --demo ekle.")
+    if not args.input_csv and not args.demo and not args.real:
+        parser.error("Gercek/verifiye veri icin --input-csv data/verified_leads.csv kullan. Demo test icin --demo, gercek lead icin --real ekle.")
     if args.input_csv and not args.input_csv.exists():
         parser.error(f"Input CSV bulunamadi: {args.input_csv}")
     return args
@@ -391,4 +483,4 @@ def parse_args() -> argparse.Namespace:
 
 if __name__ == "__main__":
     args = parse_args()
-    run(args.input_csv, args.limit, seed=args.seed, demo=args.demo)
+    run(args.input_csv, args.limit, seed=args.seed, demo=args.demo, real=getattr(args, 'real', False))

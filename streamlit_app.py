@@ -11,6 +11,7 @@ from urllib.parse import quote_plus
 import streamlit as st
 
 from src.growth_ai_ops_prototype import OUTPUT_DIR, ROOT, run
+from src.real_hr_leads import generate_real_leads
 
 
 LEADS_CSV = OUTPUT_DIR / "google_sheets_hr_leads.csv"
@@ -282,6 +283,11 @@ with st.sidebar:
     process_paste = st.button("Yapıştırılan CSV'yi Enrich Et", use_container_width=True)
 
     st.divider()
+    st.subheader("Otomatik gerçek lead")
+    st.caption("Kamuya açık kaynaklardan derlenmiş 100 gerçek Türkiye HR profesyoneli.")
+    real_clicked = st.button("🔄 100 Gerçek HR Lead Oluştur", type="primary", use_container_width=True)
+
+    st.divider()
     st.subheader("Demo fallback")
     lead_count = st.number_input("Demo lead sayısı", min_value=10, max_value=500, value=100, step=10)
     demo_clicked = st.button("Sadece Demo Seed Data Üret", use_container_width=True)
@@ -320,6 +326,32 @@ if demo_clicked:
         st.session_state.rows = generate_demo_leads(int(lead_count), progress_slot, log_slot)
         st.session_state.data_mode = "Demo seed data"
     st.warning("Bu tablo demo seed datadır; ana teslim için verified CSV kullanılmalıdır.")
+
+if real_clicked:
+    progress_slot = st.empty()
+    log_slot = st.empty()
+    with st.spinner("100 gerçek HR lead oluşturuluyor..."):
+        messages = [
+            "Kamuya açık kaynaklardan lead veritabanı yükleniyor...",
+            "Şirket profilleri eşleştiriliyor...",
+            "AI enrichment sinyalleri üretiliyor...",
+            "Outreach mesajları oluşturuluyor...",
+            "Lead scoring ve CRM stage hesaplanıyor...",
+            "CSV/XLSX çıktıları güncelleniyor...",
+        ]
+        progress = progress_slot.progress(0)
+        for index, message in enumerate(messages, start=1):
+            log_slot.caption(message)
+            progress.progress(index / (len(messages) + 1))
+            time.sleep(0.08)
+            if index == 3:
+                run(None, 100, real=True)
+        refresh_xlsx()
+        progress.progress(1.0)
+        log_slot.caption("Tamamlandı. 100 gerçek HR lead hazır.")
+        st.session_state.rows = read_rows()
+        st.session_state.data_mode = "Gerçek verified lead"
+    st.success("100 gerçek Türkiye HR profesyoneli başarıyla oluşturuldu ve enrich edildi.")
 
 rows = st.session_state.rows
 

@@ -62,7 +62,7 @@ HTML = """<!doctype html>
     main { padding: 18px 28px 28px; }
     .toolbar {
       display: grid;
-      grid-template-columns: 1.4fr 110px 170px 170px;
+      grid-template-columns: 1.2fr 100px 180px 170px 170px;
       gap: 10px;
       align-items: end;
       margin-bottom: 14px;
@@ -211,6 +211,7 @@ HTML = """<!doctype html>
         <input id="count" type="number" min="1" max="500" value="100">
       </label>
       <button id="generate">Demo Seed Üret</button>
+      <button id="realLeads" style="background:#059669">100 Gerçek Lead</button>
       <button class="secondary" id="refresh">Mevcut Çıktıyı Aç</button>
     </section>
 
@@ -298,7 +299,20 @@ HTML = """<!doctype html>
       setStatus(data.message);
     }
 
+    async function generateReal() {
+      setStatus("100 gerçek HR lead oluşturuluyor...");
+      const res = await fetch("/api/generate-real", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({})
+      });
+      const data = await res.json();
+      render(data.rows, data.meta);
+      setStatus(data.message);
+    }
+
     document.getElementById("generate").addEventListener("click", generate);
+    document.getElementById("realLeads").addEventListener("click", generateReal);
     document.getElementById("refresh").addEventListener("click", loadLeads);
     loadLeads();
   </script>
@@ -381,6 +395,19 @@ class GuiHandler(BaseHTTPRequestHandler):
         self._send(b"Not found", "text/plain", HTTPStatus.NOT_FOUND)
 
     def do_POST(self) -> None:
+        if self.path == "/api/generate-real":
+            run(None, 100, real=True)
+            refresh_xlsx()
+            rows = read_rows()
+            self._send_json(
+                {
+                    "rows": rows,
+                    "meta": build_meta(rows),
+                    "message": f"100 gerçek Türkiye HR lead'i oluşturuldu ve enrich edildi.",
+                }
+            )
+            return
+
         if self.path != "/api/generate":
             self._send(b"Not found", "text/plain", HTTPStatus.NOT_FOUND)
             return
