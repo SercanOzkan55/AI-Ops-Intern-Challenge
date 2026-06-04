@@ -1,101 +1,101 @@
 ﻿lead_id,full_name,company,title,lead_score,crm_stage,next_action
-TR-HR-001,Ebru Taşcı Firuzbay,Garanti BBVA,Yetenek ve Kültür Genel Müdür Yardımcısı,86,Warm nurture,Email sequence / nurture
-TR-HR-002,Bülent Oğuz,Akbank,İnsan ve Kültür Genel Müdür Yardımcısı,83,Warm nurture,Email sequence / nurture
-TR-HR-003,Ali Yalçın,Türkiye İş Bankası,Genel Müdür Yardımcısı - İnsan Kaynakları Yönetimi,81,Test sequence,Email sequence / nurture
-TR-HR-004,Özden Önaldı,Yapı Kredi,İnsan Kaynakları ve Organizasyon Genel Müdür Yardımcısı,64,Low-touch nurture,Email sequence / nurture
-TR-HR-005,Cenk Akıncılar,QNB Finansbank,İnsan Kaynakları Genel Müdür Yardımcısı,80,Test sequence,Email sequence / nurture
-TR-HR-006,Tuba Köseoğlu Okçu,DenizBank,İnsan Kaynakları Grubu Genel Müdür Yardımcısı,78,Test sequence,Email sequence / nurture
-TR-HR-007,Çiğdem Ünsal,TEB,İnsan Kaynakları Genel Müdür Yardımcısı,78,Test sequence,Email sequence / nurture
-TR-HR-008,Hüseyin Özuysal,Ziraat Bankası,İnsan Kaynakları Genel Müdür Yardımcısı,75,Test sequence,Email sequence / nurture
-TR-HR-009,Caner Gökbulut,Halkbank,İnsan Kaynakları ve İletişim Grup Başkanı,74,Test sequence,Email sequence / nurture
-TR-HR-010,Neşe Satıcı,Halkbank,İnsan Kaynakları Daire Başkanı,74,Test sequence,Email sequence / nurture
-TR-HR-011,Şuayyip İlbilgi,VakıfBank,"İnsan Kaynakları, Kurumsal Gelişim ve Performans Yönetimi GMY",76,Test sequence,Email sequence / nurture
-TR-HR-012,Ömer Faruk Başer,VakıfBank,İnsan Kaynakları Başkanı,76,Test sequence,Email sequence / nurture
-TR-HR-013,Hale Ökmen Ataklı,ING Türkiye,İnsan Kaynakları Genel Müdür Yardımcısı ve İcra Kurulu Üyesi,84,Warm nurture,Email sequence / nurture
-TR-HR-014,Funda Temoçin,HSBC Türkiye,İnsan Kaynakları ve Kurumsal İletişim Genel Müdür Yardımcısı,89,Warm nurture,Email sequence / nurture
-TR-HR-015,Lütfü Şener,Albaraka Türk,İnsan ve Kültür Genel Müdür Yardımcısı,71,Low-touch nurture,Email sequence / nurture
-TR-HR-016,Bike Tarakcı,Alternatif Bank,İnsan Kaynakları Genel Müdür Yardımcısı,77,Test sequence,Email sequence / nurture
-TR-HR-017,Beti Yuhay Almozlino,Trendyol,İnsan Kaynakları Başkanı (CHRO),88,Warm nurture,Email sequence / nurture
+TR-HR-001,Ebru Taşcı Firuzbay,Garanti BBVA,Yetenek ve Kültür Genel Müdür Yardımcısı,92,Priority outreach,LinkedIn connect + DM
+TR-HR-002,Bülent Oğuz,Akbank,İnsan ve Kültür Genel Müdür Yardımcısı,89,Warm nurture,Email sequence / nurture
+TR-HR-003,Ali Yalçın,Türkiye İş Bankası,Genel Müdür Yardımcısı - İnsan Kaynakları Yönetimi,87,Warm nurture,Email sequence / nurture
+TR-HR-004,Özden Önaldı,Yapı Kredi,İnsan Kaynakları ve Organizasyon Genel Müdür Yardımcısı,70,Low-touch nurture,Email sequence / nurture
+TR-HR-005,Cenk Akıncılar,QNB Finansbank,İnsan Kaynakları Genel Müdür Yardımcısı,86,Warm nurture,Email sequence / nurture
+TR-HR-006,Tuba Köseoğlu Okçu,DenizBank,İnsan Kaynakları Grubu Genel Müdür Yardımcısı,84,Warm nurture,Email sequence / nurture
+TR-HR-007,Çiğdem Ünsal,TEB,İnsan Kaynakları Genel Müdür Yardımcısı,84,Warm nurture,Email sequence / nurture
+TR-HR-008,Hüseyin Özuysal,Ziraat Bankası,İnsan Kaynakları Genel Müdür Yardımcısı,81,Test sequence,Email sequence / nurture
+TR-HR-009,Caner Gökbulut,Halkbank,İnsan Kaynakları ve İletişim Grup Başkanı,80,Test sequence,Email sequence / nurture
+TR-HR-010,Neşe Satıcı,Halkbank,İnsan Kaynakları Daire Başkanı,80,Test sequence,Email sequence / nurture
+TR-HR-011,Şuayyip İlbilgi,VakıfBank,"İnsan Kaynakları, Kurumsal Gelişim ve Performans Yönetimi GMY",82,Warm nurture,Email sequence / nurture
+TR-HR-012,Ömer Faruk Başer,VakıfBank,İnsan Kaynakları Başkanı,82,Warm nurture,Email sequence / nurture
+TR-HR-013,Hale Ökmen Ataklı,ING Türkiye,İnsan Kaynakları Genel Müdür Yardımcısı ve İcra Kurulu Üyesi,90,Priority outreach,LinkedIn connect + DM
+TR-HR-014,Funda Temoçin,HSBC Türkiye,İnsan Kaynakları ve Kurumsal İletişim Genel Müdür Yardımcısı,95,Priority outreach,LinkedIn connect + DM
+TR-HR-015,Lütfü Şener,Albaraka Türk,İnsan ve Kültür Genel Müdür Yardımcısı,77,Test sequence,Email sequence / nurture
+TR-HR-016,Bike Tarakcı,Alternatif Bank,İnsan Kaynakları Genel Müdür Yardımcısı,83,Warm nurture,Email sequence / nurture
+TR-HR-017,Beti Yuhay Almozlino,Trendyol,İnsan Kaynakları Başkanı (CHRO),94,Priority outreach,LinkedIn connect + DM
 TR-HR-018,Tuğçe Ertuğrul,Trendyol,People and Culture Leader,91,Priority outreach,LinkedIn connect + DM
-TR-HR-019,Esra Beyzadeoğlu,Hepsiburada,İnsan Kaynakları Grup Başkanı,82,Warm nurture,Email sequence / nurture
-TR-HR-020,Petek Taga,Getir,İnsandan Sorumlu Genel Müdür Yardımcısı,82,Warm nurture,Email sequence / nurture
+TR-HR-019,Esra Beyzadeoğlu,Hepsiburada,İnsan Kaynakları Grup Başkanı,88,Warm nurture,Email sequence / nurture
+TR-HR-020,Petek Taga,Getir,İnsandan Sorumlu Genel Müdür Yardımcısı,88,Warm nurture,Email sequence / nurture
 TR-HR-021,Alev Taş,Dream Games,HR Director,100,Priority outreach,LinkedIn connect + DM
-TR-HR-022,Eda Azaroğlu,Peak Games,İnsan Kaynakları Direktörü,93,Priority outreach,LinkedIn connect + DM
-TR-HR-023,Nebahat Kesgin,Logo Yazılım,Grup İnsan ve Organizasyonel Dönüşüm Direktörü,64,Low-touch nurture,Email sequence / nurture
-TR-HR-024,Aşkın Bostancıoğlu,Yemeksepeti,Head of People,75,Test sequence,Email sequence / nurture
-TR-HR-025,Güntülü Peker,Sahibinden.com,İnsan ve Sürdürülebilirlik Genel Müdür Yardımcısı,79,Test sequence,Email sequence / nurture
-TR-HR-026,Gözde Bahçekapılı Varinli,BiTaksi,Head of People,77,Test sequence,Email sequence / nurture
+TR-HR-022,Eda Azaroğlu,Peak Games,İnsan Kaynakları Direktörü,99,Priority outreach,LinkedIn connect + DM
+TR-HR-023,Nebahat Kesgin,Logo Yazılım,Grup İnsan ve Organizasyonel Dönüşüm Direktörü,70,Low-touch nurture,Email sequence / nurture
+TR-HR-024,Aşkın Bostancıoğlu,Yemeksepeti,Head of People,81,Test sequence,Email sequence / nurture
+TR-HR-025,Güntülü Peker,Sahibinden.com,İnsan ve Sürdürülebilirlik Genel Müdür Yardımcısı,85,Warm nurture,Email sequence / nurture
+TR-HR-026,Gözde Bahçekapılı Varinli,BiTaksi,Head of People,83,Warm nurture,Email sequence / nurture
 TR-HR-027,Tolga Temtek,Colendi,HR Advisor to CEO,91,Priority outreach,LinkedIn connect + DM
 TR-HR-028,Dilara Aydın,Papara,Senior People Partner,91,Priority outreach,LinkedIn connect + DM
 TR-HR-029,Seda Karatekin,AloTech,CHRO,84,Warm nurture,Email sequence / nurture
 TR-HR-030,Murat Düzgün,Papel,CHRO,82,Warm nurture,Email sequence / nurture
 TR-HR-031,Selin Esencan Baykal,Bilyoner,CHRO,77,Test sequence,Email sequence / nurture
-TR-HR-032,Erkan Durdu,Turkcell,İnsan ve İş Destekten Sorumlu Genel Müdür Yardımcısı,87,Warm nurture,Email sequence / nurture
-TR-HR-033,Nazlı Tlabar Güler,Vodafone Türkiye,İnsan Kaynaklarından Sorumlu İcra Kurulu Başkan Yardımcısı,64,Low-touch nurture,Email sequence / nurture
-TR-HR-034,İskender Bayrak,Türk Telekom,İnsan Kaynakları Genel Müdür Yardımcısı (CHRO),85,Warm nurture,Email sequence / nurture
-TR-HR-035,Bahattin Aydın,LC Waikiki,İnsan Kaynakları Genel Müdürü (CHRO),73,Low-touch nurture,Email sequence / nurture
-TR-HR-036,Can Yılmaz,Mavi,Chief Human Resources Officer (CHRO),69,Low-touch nurture,Email sequence / nurture
-TR-HR-037,Yeşim Çokeker,DeFacto,İnsan Kaynaklarından Sorumlu Genel Müdür Yardımcısı,72,Low-touch nurture,Email sequence / nurture
-TR-HR-038,Yasemin Asar,Boyner Grup,İnsan Kaynakları Genel Müdür Yardımcısı,71,Low-touch nurture,Email sequence / nurture
-TR-HR-039,Hasan Kaya,BİM,İnsan Kaynakları Başkanı (CHRO),65,Low-touch nurture,Email sequence / nurture
-TR-HR-040,Olcay Yılmaz Nomak,Migros,İnsan Kaynakları ve Endüstri İlişkileri GMY,72,Low-touch nurture,Email sequence / nurture
-TR-HR-041,Bahar Tura,CarrefourSA,İnsan Kaynakları ve Sürdürülebilirlik GMY,74,Test sequence,Email sequence / nurture
-TR-HR-042,Tuncer Konak,ŞOK Marketler,İnsan Kaynaklarından Sorumlu Genel Müdür Yardımcısı,64,Low-touch nurture,Email sequence / nurture
-TR-HR-043,Eriş Aslan,Koçtaş,İnsan Kaynakları ve Endüstri İlişkileri GMY,72,Low-touch nurture,Email sequence / nurture
-TR-HR-044,Ali Rıza Aksoy,Ford Otosan,İnsan Kaynakları Direktörü,78,Test sequence,Email sequence / nurture
-TR-HR-045,Orçun Sarıca,TOFAŞ,İnsan Kaynakları ve Endüstriyel İlişkiler Direktörü,64,Low-touch nurture,Email sequence / nurture
-TR-HR-046,Seda Koytak,Toyota Türkiye,İnsan Kaynakları ve Tesis Yönetim Direktörü,79,Test sequence,Email sequence / nurture
-TR-HR-047,Betül Çorbacıoğlu,Mercedes-Benz Türk,İnsan Kaynakları Direktörü,88,Warm nurture,Email sequence / nurture
-TR-HR-048,Gökhan Şahin,Hyundai Assan,İnsan Kaynaklarından Sorumlu Genel Müdür Yardımcısı,75,Test sequence,Email sequence / nurture
-TR-HR-049,Dr. Başak Demiryumruk Dikici,Renault MAİS,İnsan Kaynakları Direktörü,77,Test sequence,Email sequence / nurture
-TR-HR-050,Fikri Özdemir,Arçelik,"Kıdemli Direktör, İnsan Kaynakları",64,Low-touch nurture,Email sequence / nurture
-TR-HR-051,Zeynep Tarhan,Vestel,İnsan Kaynakları Genel Müdürü,79,Test sequence,Email sequence / nurture
-TR-HR-052,Nursel Ölmez Ateş,Borusan Holding,İnsan Kaynakları ve Kurumsal İletişim Grup Başkanı,83,Warm nurture,Email sequence / nurture
+TR-HR-032,Erkan Durdu,Turkcell,İnsan ve İş Destekten Sorumlu Genel Müdür Yardımcısı,93,Priority outreach,LinkedIn connect + DM
+TR-HR-033,Nazlı Tlabar Güler,Vodafone Türkiye,İnsan Kaynaklarından Sorumlu İcra Kurulu Başkan Yardımcısı,70,Low-touch nurture,Email sequence / nurture
+TR-HR-034,İskender Bayrak,Türk Telekom,İnsan Kaynakları Genel Müdür Yardımcısı (CHRO),91,Priority outreach,LinkedIn connect + DM
+TR-HR-035,Bahattin Aydın,LC Waikiki,İnsan Kaynakları Genel Müdürü (CHRO),79,Test sequence,Email sequence / nurture
+TR-HR-036,Can Yılmaz,Mavi,Chief Human Resources Officer (CHRO),75,Test sequence,Email sequence / nurture
+TR-HR-037,Yeşim Çokeker,DeFacto,İnsan Kaynaklarından Sorumlu Genel Müdür Yardımcısı,78,Test sequence,Email sequence / nurture
+TR-HR-038,Yasemin Asar,Boyner Grup,İnsan Kaynakları Genel Müdür Yardımcısı,77,Test sequence,Email sequence / nurture
+TR-HR-039,Hasan Kaya,BİM,İnsan Kaynakları Başkanı (CHRO),71,Low-touch nurture,Email sequence / nurture
+TR-HR-040,Olcay Yılmaz Nomak,Migros,İnsan Kaynakları ve Endüstri İlişkileri GMY,78,Test sequence,Email sequence / nurture
+TR-HR-041,Bahar Tura,CarrefourSA,İnsan Kaynakları ve Sürdürülebilirlik GMY,80,Test sequence,Email sequence / nurture
+TR-HR-042,Tuncer Konak,ŞOK Marketler,İnsan Kaynaklarından Sorumlu Genel Müdür Yardımcısı,70,Low-touch nurture,Email sequence / nurture
+TR-HR-043,Eriş Aslan,Koçtaş,İnsan Kaynakları ve Endüstri İlişkileri GMY,78,Test sequence,Email sequence / nurture
+TR-HR-044,Ali Rıza Aksoy,Ford Otosan,İnsan Kaynakları Direktörü,84,Warm nurture,Email sequence / nurture
+TR-HR-045,Orçun Sarıca,TOFAŞ,İnsan Kaynakları ve Endüstriyel İlişkiler Direktörü,70,Low-touch nurture,Email sequence / nurture
+TR-HR-046,Seda Koytak,Toyota Türkiye,İnsan Kaynakları ve Tesis Yönetim Direktörü,85,Warm nurture,Email sequence / nurture
+TR-HR-047,Betül Çorbacıoğlu,Mercedes-Benz Türk,İnsan Kaynakları Direktörü,94,Priority outreach,LinkedIn connect + DM
+TR-HR-048,Gökhan Şahin,Hyundai Assan,İnsan Kaynaklarından Sorumlu Genel Müdür Yardımcısı,81,Test sequence,Email sequence / nurture
+TR-HR-049,Dr. Başak Demiryumruk Dikici,Renault MAİS,İnsan Kaynakları Direktörü,83,Warm nurture,Email sequence / nurture
+TR-HR-050,Fikri Özdemir,Arçelik,"Kıdemli Direktör, İnsan Kaynakları",70,Low-touch nurture,Email sequence / nurture
+TR-HR-051,Zeynep Tarhan,Vestel,İnsan Kaynakları Genel Müdürü,85,Warm nurture,Email sequence / nurture
+TR-HR-052,Nursel Ölmez Ateş,Borusan Holding,İnsan Kaynakları ve Kurumsal İletişim Grup Başkanı,89,Warm nurture,Email sequence / nurture
 TR-HR-053,Tuğba Paşalı Karacan,Borusan Otomotiv,İK ve İSG'den Sorumlu İcra Kurulu Üyesi,80,Test sequence,Email sequence / nurture
-TR-HR-054,Şengül Arslan,Şişecam,İnsan Kaynakları Genel Müdür Yardımcısı,80,Test sequence,Email sequence / nurture
-TR-HR-055,Neslihan Eroğlu,Kordsa,İnsan Kaynakları Genel Müdür Yardımcısı,81,Test sequence,Email sequence / nurture
-TR-HR-056,Tuğba Gök Nam,Brisa,İnsan Kaynakları Genel Müdür Yardımcısı,78,Test sequence,Email sequence / nurture
-TR-HR-057,Tuncay Pamuklu,Doğan Holding,İnsan Kaynakları Direktörü,76,Test sequence,Email sequence / nurture
-TR-HR-058,Abdulkerim Çay,Türk Hava Yolları,İnsan Kaynaklarından Sorumlu Genel Müdür Yardımcısı,85,Warm nurture,Email sequence / nurture
-TR-HR-059,Dilara Oğur,Pegasus Hava Yolları,İnsan Kaynaklarından Sorumlu Genel Müdür Yardımcısı,78,Test sequence,Email sequence / nurture
-TR-HR-060,Berrin Yılmaz,Enerjisa,İnsan ve Kültür Bölüm Başkanı (CHRO),80,Test sequence,Email sequence / nurture
-TR-HR-061,Önder Korkmaz,TÜPRAŞ,İnsan Kaynakları Genel Müdür Yardımcısı,78,Test sequence,Email sequence / nurture
-TR-HR-062,Gülay Savaşan,Aksa Enerji,İnsan Kaynakları Direktörü,73,Low-touch nurture,Email sequence / nurture
-TR-HR-063,Burcu Cantekinler Koç,Unilever Türkiye,İnsan Kaynakları Başkanı,89,Warm nurture,Email sequence / nurture
-TR-HR-064,Mısra Meriçten,P&G Türkiye,Kıdemli İnsan Kaynakları Direktörü,91,Priority outreach,LinkedIn connect + DM
+TR-HR-054,Şengül Arslan,Şişecam,İnsan Kaynakları Genel Müdür Yardımcısı,86,Warm nurture,Email sequence / nurture
+TR-HR-055,Neslihan Eroğlu,Kordsa,İnsan Kaynakları Genel Müdür Yardımcısı,87,Warm nurture,Email sequence / nurture
+TR-HR-056,Tuğba Gök Nam,Brisa,İnsan Kaynakları Genel Müdür Yardımcısı,84,Warm nurture,Email sequence / nurture
+TR-HR-057,Tuncay Pamuklu,Doğan Holding,İnsan Kaynakları Direktörü,82,Warm nurture,Email sequence / nurture
+TR-HR-058,Abdulkerim Çay,Türk Hava Yolları,İnsan Kaynaklarından Sorumlu Genel Müdür Yardımcısı,91,Priority outreach,LinkedIn connect + DM
+TR-HR-059,Dilara Oğur,Pegasus Hava Yolları,İnsan Kaynaklarından Sorumlu Genel Müdür Yardımcısı,84,Warm nurture,Email sequence / nurture
+TR-HR-060,Berrin Yılmaz,Enerjisa,İnsan ve Kültür Bölüm Başkanı (CHRO),86,Warm nurture,Email sequence / nurture
+TR-HR-061,Önder Korkmaz,TÜPRAŞ,İnsan Kaynakları Genel Müdür Yardımcısı,84,Warm nurture,Email sequence / nurture
+TR-HR-062,Gülay Savaşan,Aksa Enerji,İnsan Kaynakları Direktörü,79,Test sequence,Email sequence / nurture
+TR-HR-063,Burcu Cantekinler Koç,Unilever Türkiye,İnsan Kaynakları Başkanı,95,Priority outreach,LinkedIn connect + DM
+TR-HR-064,Mısra Meriçten,P&G Türkiye,Kıdemli İnsan Kaynakları Direktörü,97,Priority outreach,LinkedIn connect + DM
 TR-HR-065,Burak Gürcan,Coca-Cola İçecek,İnsan Kaynaklarından Sorumlu İcra Kurulu Üyesi,85,Warm nurture,Email sequence / nurture
-TR-HR-066,Oktay Cömert,Nestlé Türkiye,İnsan Kaynakları Direktörü,87,Warm nurture,Email sequence / nurture
-TR-HR-067,Oğuzhan Besli,Anadolu Efes,Türkiye İnsan Kaynakları Direktörü,82,Warm nurture,Email sequence / nurture
-TR-HR-068,Eylem Özgür,Ülker / Yıldız Holding,İnsan Kaynakları Başkan Yardımcısı,78,Test sequence,Email sequence / nurture
-TR-HR-069,Umut Günal,Koç Holding,İnsan Kaynakları Direktörü,64,Low-touch nurture,Email sequence / nurture
-TR-HR-070,Yeşim Özlale Önen,Sabancı Holding,İnsan Kaynakları ve Sürdürülebilirlik Grup Başkanı,64,Low-touch nurture,Email sequence / nurture
-TR-HR-071,Hakan Timur,Zorlu Holding,İnsan Kaynakları Grubu Başkanı,84,Warm nurture,Email sequence / nurture
-TR-HR-072,Evrim Bayam,Eczacıbaşı Holding,İnsan Kaynakları Grup Başkanı,64,Low-touch nurture,Email sequence / nurture
-TR-HR-073,Özge Bozkurt Altın,Kalyon Holding,İnsan Kaynakları Grup Başkanı,64,Low-touch nurture,Email sequence / nurture
-TR-HR-074,Melis Tunaveli,TAV Havalimanları,İnsan Kaynakları Grup Başkanı (CHRO),80,Test sequence,Email sequence / nurture
-TR-HR-075,Yalçın Cihan Bicioğlu,Doğuş Otomotiv,İnsan Kaynakları ve Süreç Yönetimi Direktörü,79,Test sequence,Email sequence / nurture
-TR-HR-076,Dr. M. Oğuzcan Bülbül,Abdi İbrahim,"İK, Kurumsal İletişim ve Sürdürülebilirlik Grup Başkanı",77,Test sequence,Email sequence / nurture
-TR-HR-077,Ayşe Eralp,Abdi İbrahim,Uluslararası Pazarlar İnsan Kaynakları Direktörü,77,Test sequence,Email sequence / nurture
-TR-HR-078,Kader Gönül Karaca,Eczacıbaşı Sağlık,İnsan Kaynakları Direktörü,79,Test sequence,Email sequence / nurture
-TR-HR-079,Demet Gürsoy,Medicana Sağlık Grubu,İnsan Kaynakları Grup Başkanı,72,Low-touch nurture,Email sequence / nurture
-TR-HR-080,Gökben Saraç Özalp,Acıbadem Sağlık Grubu,İnsan Kaynakları Direktör Vekili,78,Test sequence,Email sequence / nurture
-TR-HR-081,Muhammed Ali Işık,ASELSAN,İnsan Kaynakları Direktörü,80,Test sequence,Email sequence / nurture
-TR-HR-082,Oğuzhan Coşkunyürek,HAVELSAN,İnsan Kaynakları Direktörü,77,Test sequence,Email sequence / nurture
-TR-HR-083,Zeynep Ergenç,AXA Sigorta,İnsan Kaynakları Direktörü ve İcra Kurulu Üyesi,81,Test sequence,Email sequence / nurture
-TR-HR-084,Yiğitcan Bozoğlu,Aras Kargo,İnsan ve Kültür Başkan Yardımcısı,70,Low-touch nurture,Email sequence / nurture
-TR-HR-085,Salih Kayıkçıoğlu,Yurtiçi Kargo,İnsan Kaynakları ve Eğitim Genel Müdür Yardımcısı,68,Low-touch nurture,Email sequence / nurture
-TR-HR-086,Selim Tunç,Hyundai Assan,İnsan Kaynakları Yönetimi Bölüm Müdürü,75,Test sequence,Email sequence / nurture
-TR-HR-087,Tolga Büyükçelik,Hyundai Assan,İnsan Kaynakları Planlama Bölüm Müdürü,75,Test sequence,Email sequence / nurture
-TR-HR-088,Yakup İlkadlı,Kalyon Holding,İnsan Kaynakları Grup Müdürü,64,Low-touch nurture,Email sequence / nurture
-TR-HR-089,Ebubekir Karabulut,Medicana Sağlık Grubu,İnsan Kaynakları Direktörü,72,Low-touch nurture,Email sequence / nurture
-TR-HR-090,Sevil Kayaş Yılmaz,Danone Türkiye,İnsan Kaynakları Direktörü,85,Warm nurture,Email sequence / nurture
-TR-HR-091,Tülin Çalhan,Yurtiçi Kargo,İnsan Kaynakları Müdürü,68,Low-touch nurture,Email sequence / nurture
-TR-HR-092,Nilüfer Değirmenci,Teknosa,İnsan Kaynakları ve Sürdürülebilirlik Genel Müdür Yardımcısı,73,Low-touch nurture,Email sequence / nurture
-TR-HR-093,Seçil Namruk,MediaMarkt Türkiye,İnsan Kaynakları Direktörü ve İcra Kurulu Üyesi,77,Test sequence,Email sequence / nurture
-TR-HR-094,Sebla Oran Palut,Koton,İnsan Kaynakları Genel Müdür Yardımcısı,70,Low-touch nurture,Email sequence / nurture
-TR-HR-095,Hüseyin Çolak,FLO Mağazacılık,İnsan Kaynakları Genel Müdür Yardımcısı,68,Low-touch nurture,Email sequence / nurture
-TR-HR-096,İrem Çalık,Otokoç Otomotiv,"İnsan Kaynakları, Sürdürülebilirlik ve Kalite Direktörü",79,Test sequence,Email sequence / nurture
-TR-HR-097,Selim Arda Üçer,Penti,Chief Operating Officer (eski İK Direktörü),69,Low-touch nurture,Email sequence / nurture
-TR-HR-098,Pınar Anapa,Şekerbank,İnsan Kaynakları Genel Müdür Yardımcısı,71,Low-touch nurture,Email sequence / nurture
-TR-HR-099,Gözde Turan Aygör,AXA Sigorta,İnsan Kaynakları İş Ortaklığı Müdürü,81,Test sequence,Email sequence / nurture
-TR-HR-100,Özgür Burak Akkol,Türk Traktör,İnsan Kaynakları Direktörü,75,Test sequence,Email sequence / nurture
+TR-HR-066,Oktay Cömert,Nestlé Türkiye,İnsan Kaynakları Direktörü,93,Priority outreach,LinkedIn connect + DM
+TR-HR-067,Oğuzhan Besli,Anadolu Efes,Türkiye İnsan Kaynakları Direktörü,88,Warm nurture,Email sequence / nurture
+TR-HR-068,Eylem Özgür,Ülker / Yıldız Holding,İnsan Kaynakları Başkan Yardımcısı,84,Warm nurture,Email sequence / nurture
+TR-HR-069,Umut Günal,Koç Holding,İnsan Kaynakları Direktörü,70,Low-touch nurture,Email sequence / nurture
+TR-HR-070,Yeşim Özlale Önen,Sabancı Holding,İnsan Kaynakları ve Sürdürülebilirlik Grup Başkanı,70,Low-touch nurture,Email sequence / nurture
+TR-HR-071,Hakan Timur,Zorlu Holding,İnsan Kaynakları Grubu Başkanı,90,Priority outreach,LinkedIn connect + DM
+TR-HR-072,Evrim Bayam,Eczacıbaşı Holding,İnsan Kaynakları Grup Başkanı,70,Low-touch nurture,Email sequence / nurture
+TR-HR-073,Özge Bozkurt Altın,Kalyon Holding,İnsan Kaynakları Grup Başkanı,70,Low-touch nurture,Email sequence / nurture
+TR-HR-074,Melis Tunaveli,TAV Havalimanları,İnsan Kaynakları Grup Başkanı (CHRO),86,Warm nurture,Email sequence / nurture
+TR-HR-075,Yalçın Cihan Bicioğlu,Doğuş Otomotiv,İnsan Kaynakları ve Süreç Yönetimi Direktörü,85,Warm nurture,Email sequence / nurture
+TR-HR-076,Dr. M. Oğuzcan Bülbül,Abdi İbrahim,"İK, Kurumsal İletişim ve Sürdürülebilirlik Grup Başkanı",83,Warm nurture,Email sequence / nurture
+TR-HR-077,Ayşe Eralp,Abdi İbrahim,Uluslararası Pazarlar İnsan Kaynakları Direktörü,83,Warm nurture,Email sequence / nurture
+TR-HR-078,Kader Gönül Karaca,Eczacıbaşı Sağlık,İnsan Kaynakları Direktörü,85,Warm nurture,Email sequence / nurture
+TR-HR-079,Demet Gürsoy,Medicana Sağlık Grubu,İnsan Kaynakları Grup Başkanı,78,Test sequence,Email sequence / nurture
+TR-HR-080,Gökben Saraç Özalp,Acıbadem Sağlık Grubu,İnsan Kaynakları Direktör Vekili,84,Warm nurture,Email sequence / nurture
+TR-HR-081,Muhammed Ali Işık,ASELSAN,İnsan Kaynakları Direktörü,86,Warm nurture,Email sequence / nurture
+TR-HR-082,Oğuzhan Coşkunyürek,HAVELSAN,İnsan Kaynakları Direktörü,83,Warm nurture,Email sequence / nurture
+TR-HR-083,Zeynep Ergenç,AXA Sigorta,İnsan Kaynakları Direktörü ve İcra Kurulu Üyesi,87,Warm nurture,Email sequence / nurture
+TR-HR-084,Yiğitcan Bozoğlu,Aras Kargo,İnsan ve Kültür Başkan Yardımcısı,76,Test sequence,Email sequence / nurture
+TR-HR-085,Salih Kayıkçıoğlu,Yurtiçi Kargo,İnsan Kaynakları ve Eğitim Genel Müdür Yardımcısı,74,Test sequence,Email sequence / nurture
+TR-HR-086,Selim Tunç,Hyundai Assan,İnsan Kaynakları Yönetimi Bölüm Müdürü,81,Test sequence,Email sequence / nurture
+TR-HR-087,Tolga Büyükçelik,Hyundai Assan,İnsan Kaynakları Planlama Bölüm Müdürü,81,Test sequence,Email sequence / nurture
+TR-HR-088,Yakup İlkadlı,Kalyon Holding,İnsan Kaynakları Grup Müdürü,70,Low-touch nurture,Email sequence / nurture
+TR-HR-089,Ebubekir Karabulut,Medicana Sağlık Grubu,İnsan Kaynakları Direktörü,78,Test sequence,Email sequence / nurture
+TR-HR-090,Sevil Kayaş Yılmaz,Danone Türkiye,İnsan Kaynakları Direktörü,91,Priority outreach,LinkedIn connect + DM
+TR-HR-091,Tülin Çalhan,Yurtiçi Kargo,İnsan Kaynakları Müdürü,74,Test sequence,Email sequence / nurture
+TR-HR-092,Nilüfer Değirmenci,Teknosa,İnsan Kaynakları ve Sürdürülebilirlik Genel Müdür Yardımcısı,79,Test sequence,Email sequence / nurture
+TR-HR-093,Seçil Namruk,MediaMarkt Türkiye,İnsan Kaynakları Direktörü ve İcra Kurulu Üyesi,83,Warm nurture,Email sequence / nurture
+TR-HR-094,Sebla Oran Palut,Koton,İnsan Kaynakları Genel Müdür Yardımcısı,76,Test sequence,Email sequence / nurture
+TR-HR-095,Hüseyin Çolak,FLO Mağazacılık,İnsan Kaynakları Genel Müdür Yardımcısı,74,Test sequence,Email sequence / nurture
+TR-HR-096,İrem Çalık,Otokoç Otomotiv,"İnsan Kaynakları, Sürdürülebilirlik ve Kalite Direktörü",85,Warm nurture,Email sequence / nurture
+TR-HR-097,Selim Arda Üçer,Penti,Chief Operating Officer (eski İK Direktörü),75,Test sequence,Email sequence / nurture
+TR-HR-098,Pınar Anapa,Şekerbank,İnsan Kaynakları Genel Müdür Yardımcısı,77,Test sequence,Email sequence / nurture
+TR-HR-099,Gözde Turan Aygör,AXA Sigorta,İnsan Kaynakları İş Ortaklığı Müdürü,87,Warm nurture,Email sequence / nurture
+TR-HR-100,Özgür Burak Akkol,Türk Traktör,İnsan Kaynakları Direktörü,81,Test sequence,Email sequence / nurture

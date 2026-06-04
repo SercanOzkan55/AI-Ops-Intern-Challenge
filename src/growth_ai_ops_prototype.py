@@ -256,26 +256,26 @@ def write_csv(path: Path, rows: Iterable[dict[str, object]], fieldnames: list[st
 
 def seniority(title: str) -> str:
     normalized = title.lower()
-    if "director" in normalized or "muduru" in normalized:
+    if any(k in normalized for k in ["director", "direktör", "direktor", "müdür", "mudur", "başkan", "baskan", "gmy", "vp", "chief", "head", "lideri"]):
         return "Director"
     if "manager" in normalized:
         return "Manager"
     if "lead" in normalized:
         return "Lead"
-    if "partner" in normalized:
+    if any(k in normalized for k in ["partner", "ortak"]):
         return "Partner"
     return "Specialist"
 
 
 def persona(title: str) -> str:
     normalized = title.lower()
-    if "talent acquisition" in normalized:
+    if any(k in normalized for k in ["talent acquisition", "recruitment", "recruiter", "işe alım", "ise alim", "yetenek kazanımı", "yetenek kazanimi", "seçme"]):
         return "recruitment_growth"
-    if "learning" in normalized or "development" in normalized:
+    if any(k in normalized for k in ["learning", "development", "l&d", "eğitim", "egitim", "gelişim", "gelisim", "yetenek yönetimi", "yetenek yonetimi"]):
         return "learning_owner"
-    if "employee experience" in normalized or "people" in normalized:
+    if any(k in normalized for k in ["employee experience", "people", "culture", "kültür", "kultur", "çalışan deneyimi", "calisan deneyimi", "çalışan bağlılığı", "calisan bagliligi"]):
         return "employee_experience"
-    if "business partner" in normalized:
+    if any(k in normalized for k in ["business partner", "hrbp", "iş ortaklığı", "is ortakligi", "iş ortağı", "is ortagi"]):
         return "business_partner"
     return "hr_leadership"
 
